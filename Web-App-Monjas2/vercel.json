@@ -1,30 +1,49 @@
 {
     "version": 2,
-    "cleanUrls": true,
-    "routes": [
+    "cleanUrls": false,
+    "rewrites": [
         {
-            "src": "^/splat/([a-z0-9-]+)/?$",
-            "dest": "/viewer?type=splat&figure=$1"
+            "source": "/splat/:figure",
+            "destination": "/viewer.html?type=splat&figure=:figure"
         },
         {
-            "src": "^/glb/([a-z0-9-]+)/?$",
-            "dest": "/viewer?type=glb&model=$1"
+            "source": "/glb/:model",
+            "destination": "/viewer.html?type=glb&model=:model"
         },
         {
-            "src": "^/([a-z0-9-]+)/?$",
-            "dest": "/viewer?type=glb&model=$1"
-        },
+            "source": "/:slug",
+            "destination": "/viewer.html?type=glb&model=:slug"
+        }
+    ],
+    "headers": [
         {
-            "src": "/(.*)",
-            "headers": {
-                "Content-Security-Policy": "default-src 'self' https://ajax.googleapis.com; img-src 'self' data: blob:; media-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://ajax.googleapis.com; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self';",
-                "X-Frame-Options": "DENY",
-                "X-Content-Type-Options": "nosniff",
-                "Referrer-Policy": "strict-origin-when-cross-origin",
-                "Permissions-Policy": "accelerometer=(), camera=(), microphone=(), gyroscope=(), geolocation=(), xr-spatial-tracking=(self)",
-                "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload"
-            },
-            "continue": true
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self' https://ajax.googleapis.com; img-src 'self' data: blob:; media-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://ajax.googleapis.com; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self';"
+                },
+                {
+                    "key": "X-Frame-Options",
+                    "value": "DENY"
+                },
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                },
+                {
+                    "key": "Referrer-Policy",
+                    "value": "strict-origin-when-cross-origin"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "accelerometer=(), camera=(), microphone=(), gyroscope=(), geolocation=(), xr-spatial-tracking=(self)"
+                },
+                {
+                    "key": "Strict-Transport-Security",
+                    "value": "max-age=63072000; includeSubDomains; preload"
+                }
+            ]
         }
     ]
 }
