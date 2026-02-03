@@ -491,95 +491,97 @@
       { slug: 'cuadro-la-elevacion-de-la-cruz', title: 'La Elevación de la Cruz', subtitle: 'Óleo sobre lienzo · s. XVII', type: 'glb', poster: '/assets/landing/elevacion-de-la-cruz.webp' },
     ];
 
-    // DOM
-    const grid = document.getElementById('grid');
-    const qDesktop = document.getElementById('q');
-    const qMobile = document.getElementById('q-mobile');
-    const searchDrawer = document.getElementById('searchDrawer');
-    const btnSearch = document.querySelector('.mast-search-btn');
-    // Devuelve la miniatura de la landing para un slug
-    const landingThumb = (slug) => `/assets/landing/${slug}.webp`;
+    document.addEventListener('DOMContentLoaded', () => {
+      // DOM
+      const grid = document.getElementById('grid');
+      const qDesktop = document.getElementById('q');
+      const qMobile = document.getElementById('q-mobile');
+      const searchDrawer = document.getElementById('searchDrawer');
+      const btnSearch = document.querySelector('.mast-search-btn');
+      // Devuelve la miniatura de la landing para un slug
+      const landingThumb = (slug) => `/assets/landing/${slug}.webp`;
 
 
-    // Icono cubo
-    const ICON_CUBE = `
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 3l8.66 5v8L12 21l-8.66-5V8L12 3zM12 3v18M3.34 8L12 13l8.66-5"
-              stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      </svg>
-    `;
+      // Icono cubo
+      const ICON_CUBE = `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3l8.66 5v8L12 21l-8.66-5V8L12 3zM12 3v18M3.34 8L12 13l8.66-5"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      `;
 
-    const toURL = (item) => item.type === 'splat' ? `/splat/${item.slug}` : `/${item.slug}`;
-    const toCardHTML = (item) => {
-      const thumb = item.poster || landingThumb(item.slug) || '/assets/landing/placeholder.webp';
-      const href = item.type === 'splat' ? `/splat/${item.slug}` : `/${item.slug}`;
+      const toURL = (item) => item.type === 'splat' ? `/splat/${item.slug}` : `/${item.slug}`;
+      const toCardHTML = (item) => {
+        const thumb = item.poster || landingThumb(item.slug) || '/assets/landing/placeholder.webp';
+        const href = item.type === 'splat' ? `/splat/${item.slug}` : `/${item.slug}`;
 
-      return `
-      <a class="card" href="${href}">
-        <div class="thumb-wrap">
-          <div class="thumb" style="background-image:url('${thumb}')"></div>
-          <span class="badge" aria-label="${item.type.toUpperCase()}">
-            ${ICON_CUBE}
-            <span class="sr-only">${item.type.toUpperCase()}</span>
-          </span>
-        </div>
-        <div class="body">
-          <h3 class="title">${item.title || item.slug.replace(/-/g, ' ')}</h3>
-          <p class="sub">${item.subtitle || ''}</p>
-        </div>
-      </a>
-    `;
-    };
+        return `
+        <a class="card" href="${href}">
+          <div class="thumb-wrap">
+            <div class="thumb" style="background-image:url('${thumb}')"></div>
+            <span class="badge" aria-label="${item.type.toUpperCase()}">
+              ${ICON_CUBE}
+              <span class="sr-only">${item.type.toUpperCase()}</span>
+            </span>
+          </div>
+          <div class="body">
+            <h3 class="title">${item.title || item.slug.replace(/-/g, ' ')}</h3>
+            <p class="sub">${item.subtitle || ''}</p>
+          </div>
+        </a>
+      `;
+      };
 
 
-    // Término de búsqueda según breakpoint
-    function getTerm() {
-      const v1 = qDesktop?.value?.trim().toLowerCase() || '';
-      const v2 = qMobile?.value?.trim().toLowerCase() || '';
-      return window.matchMedia('(min-width:768px)').matches ? v1 : v2;
-    }
-
-    function render() {
-      const term = getTerm();
-      const items = !term ? DATA : DATA.filter(x => {
-        const hay = (x.title + ' ' + x.subtitle + ' ' + x.slug).toLowerCase();
-        return hay.includes(term);
-      });
-      grid.innerHTML = items.map(toCardHTML).join('');
-    }
-
-    // Eventos
-    qDesktop?.addEventListener('input', render);
-    qMobile?.addEventListener('input', render);
-
-    btnSearch?.addEventListener('click', () => {
-      const opened = !searchDrawer.hasAttribute('hidden');
-      if (opened) searchDrawer.setAttribute('hidden', '');
-      else {
-        searchDrawer.removeAttribute('hidden');
-        setTimeout(() => qMobile?.focus(), 0);
+      // Término de búsqueda según breakpoint
+      function getTerm() {
+        const v1 = qDesktop?.value?.trim().toLowerCase() || '';
+        const v2 = qMobile?.value?.trim().toLowerCase() || '';
+        return window.matchMedia('(min-width:768px)').matches ? v1 : v2;
       }
+
+      function render() {
+        const term = getTerm();
+        const items = !term ? DATA : DATA.filter(x => {
+          const hay = (x.title + ' ' + x.subtitle + ' ' + x.slug).toLowerCase();
+          return hay.includes(term);
+        });
+        if (grid) grid.innerHTML = items.map(toCardHTML).join('');
+      }
+
+      // Eventos
+      qDesktop?.addEventListener('input', render);
+      qMobile?.addEventListener('input', render);
+
+      btnSearch?.addEventListener('click', () => {
+        const opened = !searchDrawer.hasAttribute('hidden');
+        if (opened) searchDrawer.setAttribute('hidden', '');
+        else {
+          searchDrawer.removeAttribute('hidden');
+          setTimeout(() => qMobile?.focus(), 0);
+        }
+      });
+
+      // Render inicial
+      render();
+
+      // Bloqueo zoom accidental en UI
+      (function preventZoomOnUI() {
+        const uiRoots = ['header', '.search', '.grid'];
+        const isInUI = (t) => t?.closest && uiRoots.some(sel => t.closest(sel));
+        const onGesture = (e) => { if (isInUI(e.target)) e.preventDefault(); };
+        document.addEventListener('gesturestart', onGesture, { passive: false, capture: true });
+        document.addEventListener('gesturechange', onGesture, { passive: false, capture: true });
+        window.addEventListener('wheel', (e) => { if (e.ctrlKey && isInUI(e.target)) e.preventDefault(); }, { passive: false, capture: true });
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+          if (!isInUI(e.target)) return;
+          const now = Date.now();
+          if (now - lastTouchEnd < 350) e.preventDefault();
+          lastTouchEnd = now;
+        }, { passive: false, capture: true });
+      })();
     });
-
-    // Render inicial
-    render();
-
-    // Bloqueo zoom accidental en UI
-    (function preventZoomOnUI() {
-      const uiRoots = ['header', '.search', '.grid'];
-      const isInUI = (t) => t?.closest && uiRoots.some(sel => t.closest(sel));
-      const onGesture = (e) => { if (isInUI(e.target)) e.preventDefault(); };
-      document.addEventListener('gesturestart', onGesture, { passive: false, capture: true });
-      document.addEventListener('gesturechange', onGesture, { passive: false, capture: true });
-      window.addEventListener('wheel', (e) => { if (e.ctrlKey && isInUI(e.target)) e.preventDefault(); }, { passive: false, capture: true });
-      let lastTouchEnd = 0;
-      document.addEventListener('touchend', (e) => {
-        if (!isInUI(e.target)) return;
-        const now = Date.now();
-        if (now - lastTouchEnd < 350) e.preventDefault();
-        lastTouchEnd = now;
-      }, { passive: false, capture: true });
-    })();
 
     // Registro del Service Worker
     if ('serviceWorker' in navigator) {
