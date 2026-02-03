@@ -3,18 +3,6 @@
   "cleanUrls": false,
   "rewrites": [
     {
-      "source": "/landing",
-      "destination": "/landing/index.html"
-    },
-    {
-      "source": "/splat/:figure",
-      "destination": "/index.html?type=splat&figure=:figure"
-    },
-    {
-      "source": "/glb/:model",
-      "destination": "/index.html?type=glb&model=:model"
-    },
-    {
       "source": "/",
       "has": [
         {
@@ -49,6 +37,14 @@
       "destination": "/landing/index.html"
     },
     {
+      "source": "/splat/:figure",
+      "destination": "/index.html?type=splat&figure=:figure"
+    },
+    {
+      "source": "/glb/:model",
+      "destination": "/index.html?type=glb&model=:model"
+    },
+    {
       "source": "/models/:file",
       "destination": "/api/protect?f=/models/:file",
       "missing": [
@@ -75,6 +71,35 @@
   ],
   "headers": [
     {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self' https://ajax.googleapis.com; img-src 'self' data: blob:; media-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' https://ajax.googleapis.com; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self';"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "accelerometer=(), camera=(), microphone=(), gyroscope=(), geolocation=(), xr-spatial-tracking=(self)"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        }
+      ]
+    },
+    {
       "source": "/models/(.*)\\.usdz",
       "headers": [
         {
@@ -82,12 +107,12 @@
           "value": "model/vnd.usdz+zip"
         },
         {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "same-origin"
         },
         {
           "key": "X-Robots-Tag",
@@ -103,12 +128,12 @@
           "value": "model/gltf-binary"
         },
         {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "same-origin"
         },
         {
           "key": "X-Robots-Tag",
@@ -124,8 +149,80 @@
           "value": "image/vnd.radiance"
         },
         {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/assets/landing/(.*)\\.webp",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/webp"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/posters/(.*)\\.webp",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/webp"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/assets/audio/(.*)\\.mp3",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "audio/mpeg"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Accept-Ranges",
+          "value": "bytes"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/manifest\\.webmanifest",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json"
         },
         {
           "key": "Cache-Control",
