@@ -26,6 +26,7 @@
   <style>
     /* ===== Tokens base (mínimos) ===== */
     :root {
+      --bg: #06090a;
       --text: #e9eef7;
       --muted: #9aa4b2;
       --card: #141720;
@@ -491,6 +492,7 @@
       { slug: 'cuadro-la-elevacion-de-la-cruz', title: 'La Elevación de la Cruz', subtitle: 'Óleo sobre lienzo · s. XVII', type: 'glb', poster: '/assets/landing/elevacion-de-la-cruz.webp' },
     ];
 
+    console.log("[Museo] Cargando piezas:", DATA.length);
     document.addEventListener('DOMContentLoaded', () => {
       // DOM
       const grid = document.getElementById('grid');
@@ -546,7 +548,12 @@
           const hay = (x.title + ' ' + x.subtitle + ' ' + x.slug).toLowerCase();
           return hay.includes(term);
         });
-        if (grid) grid.innerHTML = items.map(toCardHTML).join('');
+        if (grid) {
+          console.log("[Museo] Renderizando grid con items:", items.length);
+          grid.innerHTML = items.map(toCardHTML).join('');
+        } else {
+          console.error("[Museo] ERROR: No se encontró el elemento #grid en el DOM");
+        }
       }
 
       // Eventos
