@@ -3,6 +3,10 @@
     "cleanUrls": false,
     "rewrites": [
         {
+            "source": "/",
+            "destination": "/index.html"
+        },
+        {
             "source": "/splat/:figure",
             "destination": "/viewer.html?type=splat&figure=:figure"
         },
@@ -11,8 +15,8 @@
             "destination": "/viewer.html?type=glb&model=:model"
         },
         {
-            "source": "/:slug",
-            "destination": "/viewer.html?type=glb&model=:slug"
+            "source": "/((?!assets|api|models|splat|vendor|icons|sw.js|favicon.ico|index.html|index.css|robots.txt|manifest.webmanifest|viewer.html).*)",
+            "destination": "/viewer.html?type=glb&model=$1"
         }
     ],
     "headers": [
