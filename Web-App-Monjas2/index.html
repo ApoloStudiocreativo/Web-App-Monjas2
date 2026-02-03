@@ -2455,6 +2455,15 @@
       dragHandle.addEventListener('touchmove', onTouchMove);
       dragHandle.addEventListener('touchend', onTouchEnd);
     })();
+
+    // Registro del Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('✅ Service Worker registrado para el visor'))
+          .catch(err => console.warn('❌ Error registrando SW:', err));
+      });
+    }
   </script>
   <script src="/assets/debug-overlay.js"></script>
 </body>
