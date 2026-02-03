@@ -1,8 +1,29 @@
 {
   "version": 2,
+  "cleanUrls": false,
   "routes": [
-    { "src": "^/$", "dest": "/landing/index.html" },
-
+    {
+      "src": "^/$",
+      "dest": "/landing/index.html",
+      "missing": [
+        {
+          "type": "query",
+          "key": "model"
+        },
+        {
+          "type": "query",
+          "key": "figure"
+        },
+        {
+          "type": "query",
+          "key": "type"
+        }
+      ]
+    },
+    {
+      "src": "^/$",
+      "dest": "/index.html"
+    },
     {
       "src": "^/$",
       "headers": {
@@ -14,7 +35,6 @@
         "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload"
       }
     },
-
     {
       "src": "^/landing/index\\.html$",
       "headers": {
@@ -26,7 +46,6 @@
         "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload"
       }
     },
-
     {
       "src": "^/index\\.html$",
       "headers": {
@@ -38,21 +57,34 @@
         "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload"
       }
     },
-
-    { "src": "^/splat/([a-z0-9-]+)/?$", "dest": "/?type=splat&figure=$1" },
-    { "src": "^/glb/([a-z0-9-]+)/?$",   "dest": "/?type=glb&model=$1" },
-
+    {
+      "src": "^/splat/([a-z0-9-]+)/?$",
+      "dest": "/index.html?type=splat&figure=$1"
+    },
+    {
+      "src": "^/glb/([a-z0-9-]+)/?$",
+      "dest": "/index.html?type=glb&model=$1"
+    },
     {
       "src": "^/models/(.+\\.(?:glb|usdz))$",
       "dest": "/api/protect?f=/models/$1",
-      "missing": [{ "type": "query", "key": "ok" }]
+      "missing": [
+        {
+          "type": "query",
+          "key": "ok"
+        }
+      ]
     },
     {
       "src": "^/assets/audio/(.+\\.mp3)$",
       "dest": "/api/protect?f=/assets/audio/$1",
-      "missing": [{ "type": "query", "key": "ok" }]
+      "missing": [
+        {
+          "type": "query",
+          "key": "ok"
+        }
+      ]
     },
-
     {
       "src": "^/models/(.*)\\.usdz$",
       "headers": {
@@ -83,7 +115,6 @@
         "X-Robots-Tag": "noindex, noarchive"
       }
     },
-
     {
       "src": "^/assets/landing/(.*)\\.webp$",
       "headers": {
@@ -100,7 +131,6 @@
         "Cross-Origin-Resource-Policy": "same-origin"
       }
     },
-
     {
       "src": "^/assets/audio/(.*)\\.mp3$",
       "headers": {
@@ -112,7 +142,6 @@
         "X-Robots-Tag": "noindex, noarchive"
       }
     },
-
     {
       "src": "^/splat/(.*)$",
       "headers": {
@@ -121,12 +150,26 @@
         "Cross-Origin-Resource-Policy": "same-origin"
       }
     },
-
-    { "src": "^/manifest\\.webmanifest$", "headers": { "Content-Type": "application/manifest+json", "Cache-Control": "public, max-age=31536000, immutable" } },
-    { "src": "^/robots\\.txt$", "headers": { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=86400" } },
-
-    { "handle": "filesystem" },
-
-    { "src": "^/([a-z0-9-]+)/?$", "dest": "/?type=glb&model=$1" }
+    {
+      "src": "^/manifest\\.webmanifest$",
+      "headers": {
+        "Content-Type": "application/manifest+json",
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "^/robots\\.txt$",
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "public, max-age=86400"
+      }
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "^/([a-z0-9-]+)/?$",
+      "dest": "/index.html?type=glb&model=$1"
+    }
   ]
 }

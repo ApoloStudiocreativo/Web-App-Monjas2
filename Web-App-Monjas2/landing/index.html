@@ -509,10 +509,10 @@
       </svg>
     `;
 
-    const toURL = (item) => item.type === 'splat' ? `/?type=splat&figure=${item.slug}` : `/?model=${item.slug}`;
+    const toURL = (item) => item.type === 'splat' ? `/splat/${item.slug}` : `/${item.slug}`;
     const toCardHTML = (item) => {
       const thumb = item.poster || landingThumb(item.slug) || '/assets/landing/placeholder.webp';
-      const href = item.type === 'splat' ? `/?type=splat&figure=${item.slug}` : `/?model=${item.slug}`;
+      const href = item.type === 'splat' ? `/splat/${item.slug}` : `/${item.slug}`;
 
       return `
       <a class="card" href="${href}">
