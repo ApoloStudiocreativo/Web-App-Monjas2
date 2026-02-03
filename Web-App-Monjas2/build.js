@@ -62,7 +62,7 @@ function copyDir(dir, targetDir) {
 
 
 // Execution
-console.log('Starting VERCEL OUTPUT API build (.vercel/output/static)...');
+console.log('Starting SHOTGUN build (public/dist/build/.vercel)...');
 
 targets.forEach(target => {
     const destDir = path.join(__dirname, target);
@@ -77,5 +77,23 @@ targets.forEach(target => {
     // Alive file for verification
     fs.writeFileSync(path.join(destDir, 'alive.txt'), `I am alive in ${target}`);
 });
+
+// VERCEL OUTPUT API CONFIG
+// Required for .vercel/output to be recognized
+const vercelConfigPath = path.join(__dirname, '.vercel/output/config.json');
+const vercelConfig = {
+    version: 3
+};
+
+try {
+    const outputDir = path.dirname(vercelConfigPath);
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+    }
+    fs.writeFileSync(vercelConfigPath, JSON.stringify(vercelConfig, null, 2));
+    console.log('Created .vercel/output/config.json (v3)');
+} catch (e) {
+    console.error('Error creating vercel config:', e);
+}
 
 console.log('Build complete. All targets populated.');
