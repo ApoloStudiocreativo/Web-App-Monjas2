@@ -14,7 +14,7 @@
             "destination": "/viewer.html?type=glb&model=:model"
         },
         {
-            "source": "/:slug((?!assets|api|models|splat|vendor|icons|sw.js|favicon.ico|index.html|index.css|robots.txt|manifest.webmanifest|viewer.html|test.txt).*)",
+            "source": "/:slug",
             "destination": "/viewer.html?type=glb&model=:slug"
         }
     ],
