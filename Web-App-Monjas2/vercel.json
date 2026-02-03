@@ -13,10 +13,6 @@
         {
             "source": "/glb/:model",
             "destination": "/viewer.html?type=glb&model=:model"
-        },
-        {
-            "source": "/((?!assets|api|models|splat|vendor|icons|sw.js|favicon.ico|index.html|index.css|robots.txt|manifest.webmanifest|viewer.html).*)",
-            "destination": "/viewer.html?type=glb&model=$1"
         }
     ],
     "headers": [
