@@ -1,20 +1,22 @@
 {
     "version": 2,
     "cleanUrls": true,
-    "rewrites": [
-        {
-            "source": "/splat/:figure([a-z0-9-]+)",
-            "destination": "/viewer.html?type=splat&figure=:figure"
-        },
-        {
-            "source": "/glb/:model([a-z0-9-]+)",
-            "destination": "/viewer.html?type=glb&model=:model"
-        },
-        {
-            "source": "/:slug([a-z0-9-]+)",
-            "destination": "/viewer.html?type=glb&model=:slug"
-        }
-    ],
+    "rewrites": {
+        "beforeFiles": [
+            {
+                "source": "/splat/:figure([a-z0-9-]+)",
+                "destination": "/viewer?type=splat&figure=:figure"
+            },
+            {
+                "source": "/glb/:model([a-z0-9-]+)",
+                "destination": "/viewer?type=glb&model=:model"
+            },
+            {
+                "source": "/:slug([a-z0-9-]+)",
+                "destination": "/viewer?type=glb&model=:slug"
+            }
+        ]
+    },
     "headers": [
         {
             "source": "/(.*)",
