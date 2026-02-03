@@ -1,7 +1,23 @@
 {
     "version": 2,
-    "cleanUrls": false,
-    "rewrites": [],
+    "rewrites": [
+        {
+            "source": "/",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/splat/:figure",
+            "destination": "/viewer.html?type=splat&figure=:figure"
+        },
+        {
+            "source": "/glb/:model",
+            "destination": "/viewer.html?type=glb&model=:model"
+        },
+        {
+            "source": "/:slug((?!assets|api|models|splat|vendor|icons|sw.js|favicon.ico|index.html|index.css|robots.txt|manifest.webmanifest|viewer.html|test.txt).*)",
+            "destination": "/viewer.html?type=glb&model=:slug"
+        }
+    ],
     "headers": [
         {
             "source": "/(.*)",
