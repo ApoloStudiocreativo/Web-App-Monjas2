@@ -1,20 +1,7 @@
 {
     "version": 2,
     "cleanUrls": false,
-    "rewrites": [
-        {
-            "source": "/",
-            "destination": "/index.html"
-        },
-        {
-            "source": "/splat/:figure",
-            "destination": "/viewer.html?type=splat&figure=:figure"
-        },
-        {
-            "source": "/glb/:model",
-            "destination": "/viewer.html?type=glb&model=:model"
-        }
-    ],
+    "rewrites": [],
     "headers": [
         {
             "source": "/(.*)",
