@@ -1851,3 +1851,29 @@ model-viewer {
   box-shadow: none;
   transform: scale(0.98);
 }
+/* =========================================================
+   🛡️ VISIBILITY & SCALE FAILSAFES (GLOBAL)
+   ========================================================= */
+#viewerContainer, .main-viewer-container {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 10 !important;
+  background: #0f1115 !important;
+  display: block !important;
+  overflow: hidden !important;
+}
+
+model-viewer, iframe#splat {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  transition: opacity 0.6s ease;
+}
+
+/* Fix for "white model" - ensure neutral background if HDR fails */
+model-viewer {
+  background-color: #0f1115;
+  --progress-bar-color: transparent;
+}
