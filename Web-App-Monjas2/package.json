@@ -1,0 +1,8 @@
+{
+    "scripts": {
+        "build": "mkdir -p public dist build && cp *.html *.js *.css *.json public/ 2>/dev/null || : && cp *.html *.js *.css *.json dist/ 2>/dev/null || : && cp *.html *.js *.css *.json build/ 2>/dev/null || : && cp -r assets models splat vendor public/ 2>/dev/null || : && cp -r assets models splat vendor dist/ 2>/dev/null || : && cp -r assets models splat vendor build/ 2>/dev/null || :"
+    },
+    "devDependencies": {
+        "@gltf-transform/cli": "^4.2.1"
+    }
+}
