@@ -2,7 +2,7 @@
    Museo Virtual Service Worker — v2.0.0
    ========================================================================== */
 
-const VERSION = 'v1.2.2';
+const VERSION = 'v2.0.0-root';
 const STATIC_CACHE = `museo-static-${VERSION}`;
 const DYNAMIC_CACHE = `museo-dynamic-${VERSION}`;
 const CLEANUP_INTERVAL_DAYS = 7;
