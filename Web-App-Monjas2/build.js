@@ -3,7 +3,7 @@ const path = require('path');
 
 const srcDir = __dirname;
 // TARGETS: We copy to ALL common output directories AND the Vercel Output API directory
-const targets = ['public', 'dist', 'build'];
+const targets = ['public'];
 
 targets.forEach(target => {
     const destDir = path.join(__dirname, target);
