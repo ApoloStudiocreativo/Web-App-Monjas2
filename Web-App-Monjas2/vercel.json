@@ -2,10 +2,6 @@
     "version": 2,
     "rewrites": [
         {
-            "source": "/",
-            "destination": "/index.html"
-        },
-        {
             "source": "/splat/:figure",
             "destination": "/viewer.html?type=splat&figure=:figure"
         },
@@ -14,7 +10,7 @@
             "destination": "/viewer.html?type=glb&model=:model"
         },
         {
-            "source": "/:slug",
+            "source": "/:slug([a-z0-9-]+)",
             "destination": "/viewer.html?type=glb&model=:slug"
         }
     ],
