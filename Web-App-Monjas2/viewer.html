@@ -1267,122 +1267,109 @@
       DESKTOP_MQ.addEventListener?.('change', applyDesktopMode);
       applyDesktopMode();
 
-      <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-          // 1. Initial State
-          const mv = document.getElementById('mv');
-          const splat = document.getElementById('splat');
-          const skel = document.getElementById('skel');
-          const msg = document.getElementById('msg');
-          const arBtn = document.getElementById('arBtn');
-          const sheet = document.getElementById('infoSheet');
+      document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Initial State
+      const mv = document.getElementById('mv');
+      const splat = document.getElementById('splat');
+      const skel = document.getElementById('skel');
+      const msg = document.getElementById('msg');
+      const arBtn = document.getElementById('arBtn');
+      const sheet = document.getElementById('infoSheet');
 
-          // 2. Load Info Logic
-          async function refreshInfo(s) {
-            try {
-              const res = await fetch('/assets/info.json');
-              if (!res.ok) return;
-              const data = await res.json();
-              const info = data[s];
-              if (!info) return;
+      // 2. Load Info Logic
+      async function refreshInfo(s) {
+      try {
+      const res = await fetch('/assets/info.json');
+      if (!res.ok) return;
+      const data = await res.json();
+      const info = data[s];
+      if (!info) return;
 
-              // Title
-              const pieceTitle = document.getElementById('pieceTitle');
-              if (pieceTitle) pieceTitle.textContent = info.title;
+      // Title
+      const pieceTitle = document.getElementById('pieceTitle');
+      if (pieceTitle) pieceTitle.textContent = info.title;
 
-              // Mobile Sheet
-              const infoTitle = document.getElementById('infoTitle');
-              const infoMeta = document.getElementById('infoMeta');
-              const infoDesc = document.getElementById('infoDesc');
-              if (infoTitle) infoTitle.textContent = info.title;
-              if (infoMeta) infoMeta.textContent = `${info.year || ''} · ${info.author || ''} · ${info.material || ''}`;
-              if (infoDesc) infoDesc.textContent = info.desc || '';
+      // Mobile Sheet
+      const infoTitle = document.getElementById('infoTitle');
+      const infoMeta = document.getElementById('infoMeta');
+      const infoDesc = document.getElementById('infoDesc');
+      if (infoTitle) infoTitle.textContent = info.title;
+      if (infoMeta) infoMeta.textContent = `${info.year || ''} · ${info.author || ''} · ${info.material || ''}`;
+      if (infoDesc) infoDesc.textContent = info.desc || '';
 
-              // Desktop Aside
-              const infoTitleDesktop = document.getElementById('infoTitleDesktop');
-              const infoPanel = document.getElementById('infoPanel');
-              if (infoTitleDesktop) infoTitleDesktop.textContent = info.title;
-              if (infoPanel) {
-                const meta = infoPanel.querySelector('.info-meta');
-                const desc = infoPanel.querySelector('.info-desc');
-                const details = infoPanel.querySelector('.info-details');
-                if (meta) meta.textContent = `${info.year || ''} · ${info.author || ''} · ${info.material || ''}`;
-                if (desc) desc.textContent = info.desc || '';
-                if (details) {
-                  details.innerHTML = `
-                <li><strong>Tipología:</strong> ${info.typology || info.tipologia || '—'}</li>
-                <li><strong>Material:</strong> ${info.material || '—'}</li>
-                <li><strong>Fecha:</strong> ${info.year || '—'}</li>
-                <li><strong>Autor:</strong> ${info.author || '—'}</li>
-              `;
-                }
-              }
-              document.title = `${info.title} · Museo Virtual`;
-            } catch (e) {
-              console.warn('Info load failed', e);
-            }
-          }
-
-          // 3. Routing
-          if (type === 'glb' && model) {
-            mv.style.display = 'block';
-            mv.src = glbUrl(model);
-            mv.iosSrc = usdzUrl(model);
-
-            // Settings per piece
-            const cam = (window.cameraSettings && window.cameraSettings[model]) || {};
-            if (cam.orbit) mv.cameraOrbit = cam.orbit;
-            if (cam.target) mv.cameraTarget = cam.target;
-            if (cam.fov) mv.fieldOfView = cam.fov;
-            if (cam.minRadius) mv.minCameraOrbit = `auto auto ${cam.minRadius}`;
-            if (cam.maxRadius) mv.maxCameraOrbit = `auto auto ${cam.maxRadius}`;
-
-            mv.addEventListener('load', () => {
-              skel.classList.add('hidden');
-              mv.style.opacity = '1';
-              if (document.getElementById('glbPoster')) document.getElementById('glbPoster').classList.add('fade-out');
-              setArEnabled(true);
-            }, { once: true });
-
-            mv.addEventListener('error', () => {
-              skel.classList.add('hidden');
-              showToast('Error cargando el modelo 3D');
-            });
-
-          } else if (type === 'splat' && figure) {
-            splat.style.display = 'block';
-            splat.src = splatUrl(figure);
-            splat.addEventListener('load', () => {
-              skel.classList.add('hidden');
-              splat.style.opacity = '1';
-              if (document.getElementById('splatPoster')) document.getElementById('splatPoster').classList.add('fade-out');
-              setArEnabled(true);
-            }, { once: true });
-          } else {
-            showHelp();
-          }
-
-          // 4. Initialization
-          await refreshInfo(slug);
-          setupAudioFor(slug);
-          applyDesktopMode();
-
-          // Auto-open info if needed
-          const wantsInfo = new URLSearchParams(location.search).get('info') === '1' || location.hash === '#info';
-          if (wantsInfo) openSheet();
-        });
-      </script>
+      // Desktop Aside
+      const infoTitleDesktop = document.getElementById('infoTitleDesktop');
+      const infoPanel = document.getElementById('infoPanel');
+      if (infoTitleDesktop) infoTitleDesktop.textContent = info.title;
+      if (infoPanel) {
+      const meta = infoPanel.querySelector('.info-meta');
+      const desc = infoPanel.querySelector('.info-desc');
+      const details = infoPanel.querySelector('.info-details');
+      if (meta) meta.textContent = `${info.year || ''} · ${info.author || ''} · ${info.material || ''}`;
+      if (desc) desc.textContent = info.desc || '';
+      if (details) {
+      details.innerHTML = `
+      <li><strong>Tipología:</strong> ${info.typology || info.tipologia || '—'}</li>
+      <li><strong>Material:</strong> ${info.material || '—'}</li>
+      <li><strong>Fecha:</strong> ${info.year || '—'}</li>
+      <li><strong>Autor:</strong> ${info.author || '—'}</li>
+      `;
       }
-
-      } catch (err) {
-      console.error('Error cargando info.json:', err);
+      }
+      document.title = `${info.title} · Museo Virtual`;
+      } catch (e) {
+      console.warn('Info load failed', e);
       }
       }
 
-      // 👇👇 Mantén esto abajo del todo, antes del cierre:
-      })();
+      // 3. Routing
+      if (type === 'glb' && model) {
+      mv.style.display = 'block';
+      mv.src = glbUrl(model);
+      mv.iosSrc = usdzUrl(model);
 
-      })();
+      // Settings per piece
+      const cam = (window.cameraSettings && window.cameraSettings[model]) || {};
+      if (cam.orbit) mv.cameraOrbit = cam.orbit;
+      if (cam.target) mv.cameraTarget = cam.target;
+      if (cam.fov) mv.fieldOfView = cam.fov;
+      if (cam.minRadius) mv.minCameraOrbit = `auto auto ${cam.minRadius}`;
+      if (cam.maxRadius) mv.maxCameraOrbit = `auto auto ${cam.maxRadius}`;
+
+      mv.addEventListener('load', () => {
+      skel.classList.add('hidden');
+      mv.style.opacity = '1';
+      if (document.getElementById('glbPoster')) document.getElementById('glbPoster').classList.add('fade-out');
+      setArEnabled(true);
+      }, { once: true });
+
+      mv.addEventListener('error', () => {
+      skel.classList.add('hidden');
+      showToast('Error cargando el modelo 3D');
+      });
+
+      } else if (type === 'splat' && figure) {
+      splat.style.display = 'block';
+      splat.src = splatUrl(figure);
+      splat.addEventListener('load', () => {
+      skel.classList.add('hidden');
+      splat.style.opacity = '1';
+      if (document.getElementById('splatPoster')) document.getElementById('splatPoster').classList.add('fade-out');
+      setArEnabled(true);
+      }, { once: true });
+      } else {
+      showHelp();
+      }
+
+      // 4. Initialization
+      await refreshInfo(slug);
+      setupAudioFor(slug);
+      applyDesktopMode();
+
+      // Auto-open info if needed
+      const wantsInfo = new URLSearchParams(location.search).get('info') === '1' || location.hash === '#info';
+      if (wantsInfo) openSheet();
+      });
 
       /* === PANEL VISUAL DE AJUSTE DE CÁMARA (con min/max zoom) === */
       (function setupCameraDebugPanel() {
