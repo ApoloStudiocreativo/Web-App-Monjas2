@@ -673,9 +673,37 @@
         }
 
         .site-footer a { color: var(--c-gold); text-decoration: none; }
+        .site-footer { padding-bottom: 90px !important; }
 
+        /* ─── Global Nav: Visualizador Style ─── */
         #global-nav {
-            display: none !important;
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 100 !important;
+            background: rgba(16, 6, 9, 0.94) !important;
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+            padding: 8px 16px 20px !important;
+        }
+
+        #global-nav .nav-item,
+        #global-nav a {
+            color: rgba(240, 236, 232, 0.5) !important;
+            transition: color var(--transition), transform var(--transition);
+        }
+
+        #global-nav .nav-item:hover,
+        #global-nav a:hover {
+            color: var(--c-gold) !important;
+            transform: translateY(-2px);
+        }
+
+        #global-nav .nav-item.text-primary,
+        #global-nav .nav-item.text-primary span {
+            color: var(--c-gold) !important;
         }
 
         @media (max-width: 600px) {
@@ -1570,23 +1598,22 @@
     <!-- ============================================ -->
     <!-- GLOBAL BOTTOM NAVIGATION BAR -->
     <!-- ============================================ -->
-    <nav id="global-nav"
-        class="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-background-dark/95 backdrop-blur-xl border-t border-gray-200 dark:border-white/10 pb-6 pt-2 px-6 z-[100] hidden">
+    <nav id="global-nav" class="hidden">
         <div class="flex items-center justify-center gap-10 max-w-md mx-auto">
-            <div class="flex flex-col items-center gap-1 text-primary cursor-pointer nav-item" data-section="home">
+            <div class="flex flex-col items-center gap-1 cursor-pointer nav-item text-primary" data-section="home">
                 <span class="material-symbols-outlined font-bold">home</span>
                 <span class="text-[10px] font-bold">Inicio</span>
             </div>
-            <div class="flex flex-col items-center gap-1 text-slate-400 dark:text-gray-500 cursor-pointer nav-item"
+            <div class="flex flex-col items-center gap-1 cursor-pointer nav-item"
                 data-section="viewer">
                 <span class="material-symbols-outlined">view_in_ar</span>
                 <span class="text-[10px]">Visor 3D</span>
             </div>
-            <a href="/visualizador" class="flex flex-col items-center gap-1 text-slate-400 dark:text-gray-500 cursor-pointer">
+            <a href="/visualizador" class="flex flex-col items-center gap-1 cursor-pointer no-underline text-inherit">
                 <span class="material-symbols-outlined">workspace_premium</span>
                 <span class="text-[10px]">Máxima calidad</span>
             </a>
-            <div class="flex flex-col items-center gap-1 text-slate-400 dark:text-gray-500 cursor-pointer nav-item"
+            <div class="flex flex-col items-center gap-1 cursor-pointer nav-item"
                 data-section="info">
                 <span class="material-symbols-outlined">info</span>
                 <span class="text-[10px]">Info</span>
