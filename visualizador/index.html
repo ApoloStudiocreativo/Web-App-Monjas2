@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -925,5 +925,12 @@
     <p>Museo de San JoaquÃ­n y Santa Ana</p>
   </footer>
 
+  <script>
+    document.querySelectorAll('.figure-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        sessionStorage.setItem('fromVisualizador', '1');
+      });
+    });
+  </script>
 </body>
 </html>

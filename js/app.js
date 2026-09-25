@@ -870,6 +870,11 @@ class MuseumApp {
         const backBtn = document.getElementById('back-to-home-btn');
         if (backBtn) {
             backBtn.addEventListener('click', () => {
+                if ((document.referrer && document.referrer.includes('/visualizador')) || sessionStorage.getItem('fromVisualizador') === '1') {
+                    sessionStorage.removeItem('fromVisualizador');
+                    window.location.href = '/visualizador';
+                    return;
+                }
                 history.pushState({ section: 'home' }, '', '/');
                 this.navigateToSection('home');
             });
