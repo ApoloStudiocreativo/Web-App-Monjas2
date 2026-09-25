@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visualizador de Figuras – Museo de San Joaquín y Santa Ana</title>
-  <meta name="description" content="Catálogo interactivo de figuras del Museo de San Joaquín y Santa Ana. Explora las tallas y piezas del museo en un visualizador 3D con PlayCanvas." />
+  <title>Visualizador de Figuras â€“ Museo de San JoaquÃ­n y Santa Ana</title>
+  <meta name="description" content="CatÃ¡logo interactivo de figuras del Museo de San JoaquÃ­n y Santa Ana. Explora las tallas y piezas del museo en un visualizador 3D con PlayCanvas." />
   <link rel="icon" href="/Logotipo/isotipo.png" type="image/png" />
 
   <!-- Google Fonts -->
@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ─── Reset & Tokens ───────────────────────────────────── */
+    /* â”€â”€â”€ Reset & Tokens â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -37,7 +37,7 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* ─── Noise overlay ────────────────────────────────────── */
+    /* â”€â”€â”€ Noise overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -45,7 +45,7 @@
       pointer-events: none; z-index: 0;
     }
 
-    /* ─── Header ───────────────────────────────────────────── */
+    /* â”€â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .site-header {
       position: sticky; top: 0; z-index: 100;
       background: rgba(16,6,9,0.85);
@@ -113,7 +113,7 @@
     .back-btn:hover { color: var(--c-gold); }
     .back-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
 
-    /* ─── Hero ─────────────────────────────────────────────── */
+    /* â”€â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .hero {
       position: relative;
       overflow: hidden;
@@ -174,7 +174,7 @@
       color: var(--c-muted);
     }
 
-    /* ─── Divider ──────────────────────────────────────────── */
+    /* â”€â”€â”€ Divider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .divider {
       max-width: 1100px;
       margin: 0 auto;
@@ -199,7 +199,7 @@
       white-space: nowrap;
     }
 
-    /* ─── Grid ─────────────────────────────────────────────── */
+    /* â”€â”€â”€ Grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .catalog-grid {
       max-width: 1100px;
       margin: 0 auto;
@@ -209,7 +209,7 @@
       gap: 24px;
     }
 
-    /* ─── Card ─────────────────────────────────────────────── */
+    /* â”€â”€â”€ Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .figure-card {
       position: relative;
       border-radius: var(--radius);
@@ -372,7 +372,7 @@
 
     .figure-card:hover .card-arrow svg { stroke: #100609; }
 
-    /* placeholder card (sin datos aún) */
+    /* placeholder card (sin datos aÃºn) */
     .card-placeholder .card-thumb {
       background: repeating-linear-gradient(
         45deg,
@@ -393,7 +393,7 @@
       stroke: var(--c-gold);
     }
 
-    /* ─── Empty state ──────────────────────────────────────── */
+    /* â”€â”€â”€ Empty state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .empty-card {
       border: 2px dashed rgba(201,168,76,0.15);
       background: transparent;
@@ -412,7 +412,7 @@
     .empty-card svg { width: 32px; height: 32px; opacity: 0.3; stroke: var(--c-gold); }
     .empty-card p { font-size: 13px; }
 
-    /* ─── Footer ───────────────────────────────────────────── */
+    /* â”€â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .site-footer {
       border-top: 1px solid var(--c-border);
       text-align: center;
@@ -425,7 +425,7 @@
 
     .site-footer a { color: var(--c-gold); text-decoration: none; }
 
-    /* ─── Responsive ───────────────────────────────────────── */
+    /* â”€â”€â”€ Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     @media (max-width: 600px) {
       .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 0 16px 60px; }
       .hero { padding: 48px 16px 40px; }
@@ -435,13 +435,13 @@
 
 <body>
 
-  <!-- ─── HEADER ─────────────────────────────────────────── -->
+  <!-- â”€â”€â”€ HEADER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
   <header class="site-header">
     <div class="header-inner">
       <a href="/" class="header-logo" title="Volver al inicio">
         <img src="/Logotipo/Logotipo3.png" alt="Museo Logo" />
         <span class="header-logo-text">
-          Museo de San Joaquín<br />
+          Museo de San JoaquÃ­n<br />
           <span class="header-logo-sub">y Santa Ana</span>
         </span>
       </a>
@@ -455,16 +455,16 @@
     </div>
   </header>
 
-  <!-- ─── HERO ────────────────────────────────────────────── -->
+  <!-- â”€â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
   <section class="hero">
-    <p class="hero-eyebrow">Colección Digital</p>
+    <p class="hero-eyebrow">ColecciÃ³n Digital</p>
     <h1>Visualizador Interactivo<strong>de Figuras 3D</strong></h1>
     <p class="hero-desc">
-      Explora las tallas y piezas de la colección del museo en un visualizador interactivo de Máxima calidad. Selecciona una figura para comenzar. <a href="https://www.apolostudio.es" target="_blank" rel="noopener" style="color:#5b7b91; text-decoration:none; font-weight:500;">Tecnología desarrollada por Apolo Studios</a>
+      Explora las tallas y piezas de la colecciÃ³n del museo en un visualizador interactivo de MÃ¡xima calidad. Selecciona una figura para comenzar. <a href="https://www.apolostudio.es" target="_blank" rel="noopener" style="color:#5b7b91; text-decoration:none; font-weight:500;">TecnologÃ­a desarrollada por Apolo Studios</a>
     </p>
   </section>
 
-  <!-- ─── CATÁLOGO ─────────────────────────────────────────── -->
+  <!-- â”€â”€â”€ CATÃLOGO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
   <div class="divider">
     <div class="divider-line"></div>
     <span class="divider-label">Figuras disponibles</span>
@@ -474,27 +474,27 @@
   <main class="catalog-grid" id="catalog">
 
     <!--
-    ╔══════════════════════════════════════════════════════════╗
-    ║  INSTRUCCIONES PARA AÑADIR UNA FIGURA NUEVA             ║
-    ║                                                         ║
-    ║  1. Duplica el bloque <a class="figure-card"> de abajo ║
-    ║  2. Cambia el href al slug de la figura                 ║
-    ║     Ej: href="visualizador/nombre-figura/"              ║
-    ║  3. Actualiza: imagen, nombre, autor y categoría        ║
-    ║  4. Crea la carpeta: visualizador/nombre-figura/        ║
-    ║     con un index.html (usa la plantilla existe)         ║
-    ╚══════════════════════════════════════════════════════════╝
+    â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
+    â•‘  INSTRUCCIONES PARA AÃ‘ADIR UNA FIGURA NUEVA             â•‘
+    â•‘                                                         â•‘
+    â•‘  1. Duplica el bloque <a class="figure-card"> de abajo â•‘
+    â•‘  2. Cambia el href al slug de la figura                 â•‘
+    â•‘     Ej: href="visualizador/nombre-figura/"              â•‘
+    â•‘  3. Actualiza: imagen, nombre, autor y categorÃ­a        â•‘
+    â•‘  4. Crea la carpeta: visualizador/nombre-figura/        â•‘
+    â•‘     con un index.html (usa la plantilla existe)         â•‘
+    â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
     -->
 
-    <!-- ════════════════════════════════════════════════════════
-         INSTRUCCIÓN PARA AÑADIR UNA FIGURA NUEVA:
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+         INSTRUCCIÃ“N PARA AÃ‘ADIR UNA FIGURA NUEVA:
          1. Duplica el bloque <a class="figure-card"> de abajo
          2. Cambia href="/visualizador/NOMBRE-CARPETA/"
-         3. Actualiza imagen, nombre, autor, categoría
+         3. Actualiza imagen, nombre, autor, categorÃ­a
          4. La carpeta NOMBRE-CARPETA/ debe tener su propio index.html con PlayCanvas
-         ════════════════════════════════════════════════════════ -->
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 
-    <!-- ── FIGURA 1: figura-ejemplo ── ✅ ACTIVA ──────────── -->
+    <!-- â”€â”€ FIGURA 1: Virgen Inmaculada â”€â”€ âœ… Visualizador 3D â”€â”€ -->
     <a class="figure-card" href="/visualizador/inmaculada/" id="card-inmaculada">
       <div class="card-thumb">
         <img src="/visualizador/inmaculada/virgen-inmaculada.webp?v=2" alt="Virgen Inmaculada" loading="lazy" />
@@ -508,7 +508,7 @@
       </div>
       <div class="card-body">
         <p class="card-name">Virgen Inmaculada</p>
-        <p class="card-author">Autor:Anónimo· Siglo:XVIII</p>
+        <p class="card-author">Autor:AnÃ³nimoÂ· Siglo:XVIII</p>
         <div class="card-footer">
           <span class="card-tag">Visualizador 3D</span>
           <span class="card-arrow">
@@ -520,7 +520,7 @@
       </div>
     </a>
 
-    <!-- ── FIGURA 2: mena ─────────────────────────────── -->
+    <!-- â”€â”€ FIGURA 2: mena â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <a class="figure-card" href="/visualizador/mena/" id="card-mena">
       <div class="card-thumb">
         <img src="/visualizador/mena/mena.webp" alt="Figura Mena" loading="lazy" />
@@ -533,7 +533,7 @@
       </div>
       <div class="card-body">
         <p class="card-name">Virgen de Mena</p>
-        <p class="card-author">Autor:Pedro de Mena· Siglo:XVII</p>
+        <p class="card-author">Autor:Pedro de MenaÂ· Siglo:XVII</p>
         <div class="card-footer">
           <span class="card-tag">Visualizador 3D</span>
           <span class="card-arrow">
@@ -545,10 +545,10 @@
       </div>
     </a>
 
-    <!-- ── FIGURA 3: romanica ─────────────────────────────── -->
+    <!-- â”€â”€ FIGURA 3: romanica â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <a class="figure-card" href="/visualizador/romanica/" id="card-romanica">
       <div class="card-thumb">
-        <img src="/visualizador/romanica/romanica.webp" alt="Figura Románica" loading="lazy" />
+        <img src="/visualizador/romanica/romanica.webp" alt="Figura RomÃ¡nica" loading="lazy" />
         <span class="card-badge">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
@@ -557,8 +557,8 @@
         </span>
       </div>
       <div class="card-body">
-        <p class="card-name">Figura Románica</p>
-        <p class="card-author">Arte Románico</p>
+        <p class="card-name">Figura RomÃ¡nica</p>
+        <p class="card-author">Arte RomÃ¡nico</p>
         <div class="card-footer">
           <span class="card-tag">Visualizador 3D</span>
           <span class="card-arrow">
@@ -570,7 +570,7 @@
       </div>
     </a>
 
-    <!-- ── FIGURA 4: sanbernardo ─────────────────────────────── -->
+    <!-- â”€â”€ FIGURA 4: sanbernardo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <a class="figure-card" href="/visualizador/sanbernardo/" id="card-sanbernardo">
       <div class="card-thumb">
         <img src="/visualizador/sanbernardo/miniatura.webp" alt="San Bernardo" loading="lazy" />
@@ -583,7 +583,7 @@
       </div>
       <div class="card-body">
         <p class="card-name">San Bernardo con la Virgen</p>
-        <p class="card-author">Autor:Luis Salvador Carmona· Siglo:XVIII</p>
+        <p class="card-author">Autor:Luis Salvador CarmonaÂ· Siglo:XVIII</p>
         <div class="card-footer">
           <span class="card-tag">Visualizador 3D</span>
           <span class="card-arrow">
@@ -595,441 +595,334 @@
       </div>
     </a>
 
-    <!-- ── FIGURA 5: Vista 360º ──────────────────────────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 5: Vista 360Âº â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/HDR">
       <div class="card-thumb">
-        <img src="/models/HDR/HDR.jpg" alt="Vista 360º del Museo" loading="lazy" />
+        <img src="/models/HDR/HDR.jpg" alt="Vista 360Âº del Museo" loading="lazy" />
         <div class="card-thumb-gradient"></div>
-        <span class="card-badge">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M360" />
-          </svg>
-          360°
-        </span>
+        <span class="card-badge" style="background:rgba(255,188,2,0.15); border-color:rgba(255,188,2,0.3); color:#ffbc02;">360Â°</span>
       </div>
       <div class="card-body">
-        <p class="card-name">Vista 360º del Museo</p>
-        <p class="card-author">Recorrido panorámico interactivo</p>
+        <p class="card-name">Vista 360Âº del Museo</p>
+        <p class="card-author">Recorrido panorÃ¡mico interactivo</p>
         <div class="card-footer">
-          <span class="card-tag" style="color:var(--c-gold)">Disponible en App</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Interactivo</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 6: Cristo de papelón ───────────────────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 6: Cristo de papelÃ³n â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/jesus-en-la-cruz">
       <div class="card-thumb">
-        <img src="/models/jesus-en-la-cruz/jesus-en-la-cruz.webp" alt="Cristo de papelón" loading="lazy" />
+        <img src="/models/jesus-en-la-cruz/jesus-en-la-cruz.webp" alt="Cristo de papelÃ³n" loading="lazy" />
         <div class="card-thumb-gradient"></div>
-        <span class="card-badge" style="background:rgba(212,17,50,0.15); border-color:rgba(212,17,50,0.3);">
-          <svg fill="none" viewBox="0 0 24 24" stroke="#d41132" stroke-width="2" width="12" height="12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-          </svg>
-          AR
-        </span>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
-        <p class="card-name">Cristo de papelón</p>
-        <p class="card-author">Francisco Antonio Ruiz Gijón · S. XVI</p>
+        <p class="card-name">Cristo de papelÃ³n</p>
+        <p class="card-author">Francisco Antonio Ruiz GijÃ³n Â· S. XVI</p>
         <div class="card-footer">
-          <span class="card-tag" style="color:var(--c-gold)">Disponible en App</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Escultura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 7: Ecce Homo ────────────────────────────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 7: Ecce Homo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/ecce-homo">
       <div class="card-thumb">
         <img src="/models/ecce-homo/ecce-homo.webp" alt="Ecce Homo" loading="lazy" />
         <div class="card-thumb-gradient"></div>
-        <span class="card-badge" style="background:rgba(212,17,50,0.15); border-color:rgba(212,17,50,0.3);">
-          <svg fill="none" viewBox="0 0 24 24" stroke="#d41132" stroke-width="2" width="12" height="12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-          </svg>
-          AR
-        </span>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
         <p class="card-name">Ecce Homo</p>
-        <p class="card-author">Francisco Alonso de los Ríos · S. XVII</p>
+        <p class="card-author">Francisco Alonso de los RÃ­os Â· S. XVII</p>
         <div class="card-footer">
-          <span class="card-tag" style="color:var(--c-gold)">Disponible en App</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Escultura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 8: Cuadro Bayeu Inmaculada ─────────────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 8: Cuadro Bayeu Inmaculada â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/bayeu-inmaculada">
       <div class="card-thumb">
         <img src="/models/bayeu-inmaculada/bayeu-inmaculada.webp" alt="Cuadro Bayeu Inmaculada" loading="lazy" />
         <div class="card-thumb-gradient"></div>
-        <span class="card-badge" style="background:rgba(212,17,50,0.15); border-color:rgba(212,17,50,0.3);">
-          <svg fill="none" viewBox="0 0 24 24" stroke="#d41132" stroke-width="2" width="12" height="12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-          </svg>
-          AR
-        </span>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
         <p class="card-name">Cuadro Bayeu Inmaculada</p>
-        <p class="card-author">Ramón Bayeu · S. XVIII</p>
+        <p class="card-author">RamÃ³n Bayeu Â· S. XVIII</p>
         <div class="card-footer">
-          <span class="card-tag" style="color:var(--c-gold)">Disponible en App</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Pintura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 9: Cuadro Bayeu San Benito ─────────────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 9: Cuadro Bayeu San Benito â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/bayeu-san-benito">
       <div class="card-thumb">
         <img src="/models/bayeu-san-benito/bayeu-san-benito.webp" alt="Cuadro Bayeu San Benito" loading="lazy" />
         <div class="card-thumb-gradient"></div>
-        <span class="card-badge" style="background:rgba(212,17,50,0.15); border-color:rgba(212,17,50,0.3);">
-          <svg fill="none" viewBox="0 0 24 24" stroke="#d41132" stroke-width="2" width="12" height="12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-          </svg>
-          AR
-        </span>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
         <p class="card-name">Cuadro Bayeu San Benito</p>
-        <p class="card-author">Ramón Bayeu · S. XVIII</p>
+        <p class="card-author">RamÃ³n Bayeu Â· S. XVIII</p>
         <div class="card-footer">
-          <span class="card-tag" style="color:var(--c-gold)">Disponible en App</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Pintura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 10: Cuadro Bayeu Santa Escolástica ──────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 10: Cuadro Bayeu Santa EscolÃ¡stica â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/bayeu-santa-gertrudis">
       <div class="card-thumb">
-        <img src="/models/bayeu-santa-gertrudis/bayeu-santa-gertrudis.webp" alt="Cuadro Bayeu Santa Escolástica" loading="lazy" />
+        <img src="/models/bayeu-santa-gertrudis/bayeu-santa-gertrudis.webp" alt="Cuadro Bayeu Santa EscolÃ¡stica" loading="lazy" />
         <div class="card-thumb-gradient"></div>
-        <span class="card-badge" style="background:rgba(212,17,50,0.15); border-color:rgba(212,17,50,0.3);">
-          <svg fill="none" viewBox="0 0 24 24" stroke="#d41132" stroke-width="2" width="12" height="12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-          </svg>
-          AR
-        </span>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
-        <p class="card-name">Cuadro Bayeu Santa Escolástica</p>
-        <p class="card-author">Ramón Bayeu · S. XVIII</p>
+        <p class="card-name">Cuadro Bayeu Santa EscolÃ¡stica</p>
+        <p class="card-author">RamÃ³n Bayeu Â· S. XVIII</p>
         <div class="card-footer">
-          <span class="card-tag" style="color:var(--c-gold)">Disponible en App</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Pintura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 11: Cuadro Goya Tránsito de San José ────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 11: Cuadro Goya TrÃ¡nsito de San JosÃ© â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/goya-transito-de-san-jose">
       <div class="card-thumb">
-        <img src="/models/goya-transito-de-san-jose/goya-transito-de-san-jose.webp" alt="Cuadro Goya Tránsito de San José" loading="lazy" />
+        <img src="/models/goya-transito-de-san-jose/goya-transito-de-san-jose.webp" alt="Cuadro Goya TrÃ¡nsito de San JosÃ©" loading="lazy" />
         <div class="card-thumb-gradient"></div>
-        <span class="card-badge" style="background:rgba(212,17,50,0.15); border-color:rgba(212,17,50,0.3);">
-          <svg fill="none" viewBox="0 0 24 24" stroke="#d41132" stroke-width="2" width="12" height="12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-          </svg>
-          AR
-        </span>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
-        <p class="card-name">Cuadro Goya Tránsito de San José</p>
-        <p class="card-author">Francisco de Goya · S. XVIII</p>
+        <p class="card-name">Cuadro Goya TrÃ¡nsito de San JosÃ©</p>
+        <p class="card-author">Francisco de Goya Â· S. XVIII</p>
         <div class="card-footer">
-          <span class="card-tag" style="color:var(--c-gold)">Disponible en App</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Pintura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 12: Cuadro Goya San Carlos Borromeo ─────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 12: Cuadro Goya San Bernardo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/goya-san-carlos-borromeo">
       <div class="card-thumb">
         <img src="/models/goya-san-carlos-borromeo/goya-san-carlos-borromeo.webp" alt="Cuadro Goya San Bernardo" loading="lazy" />
         <div class="card-thumb-gradient"></div>
-        <span class="card-badge" style="background:rgba(212,17,50,0.15); border-color:rgba(212,17,50,0.3);">
-          <svg fill="none" viewBox="0 0 24 24" stroke="#d41132" stroke-width="2" width="12" height="12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-          </svg>
-          AR
-        </span>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
         <p class="card-name">Cuadro Goya San Bernardo</p>
-        <p class="card-author">Francisco de Goya · S. XVIII</p>
+        <p class="card-author">Francisco de Goya Â· S. XVIII</p>
         <div class="card-footer">
-          <span class="card-tag" style="color:var(--c-gold)">Disponible en App</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Pintura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 13: Cuadro Goya Santa Lutgarda ─────────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 13: Cuadro Goya Santa Lutgarda â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/goya-santa-engracia">
       <div class="card-thumb">
-        <img src="/models/goya-santa-lutgarda/goya-santa-lutgarda.webp" alt="Cuadro Goya Santa Lutgarda" loading="lazy"
-             onerror="this.style.display='none'; this.parentElement.classList.add('no-img')" />
+        <img src="/models/goya-santa-engracia/goya-santa-engracia.webp" alt="Cuadro Goya Santa Lutgarda" loading="lazy" />
         <div class="card-thumb-gradient"></div>
-        <span class="card-badge" style="background:rgba(212,17,50,0.15); border-color:rgba(212,17,50,0.3);">
-          <svg fill="none" viewBox="0 0 24 24" stroke="#d41132" stroke-width="2" width="12" height="12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-          </svg>
-          AR
-        </span>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
         <p class="card-name">Cuadro Goya Santa Lutgarda</p>
-        <p class="card-author">Francisco de Goya · S. XVIII</p>
+        <p class="card-author">Francisco de Goya Â· S. XVIII</p>
         <div class="card-footer">
-          <span class="card-tag" style="color:var(--c-gold)">Disponible en App</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Pintura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 14: Cristo Yacente ─────────────────────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 14: Cuadro ExaltaciÃ³n de la Cruz â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/la-elevacion-de-la-cruz">
       <div class="card-thumb">
-        <img src="/models/cristo-yacente/cristo-yacente.webp" alt="Cristo Yacente" loading="lazy"
-             onerror="this.style.display='none'" />
+        <img src="/models/la-elevacion-de-la-cruz/la-elevacion-de-la-cruz.webp" alt="Cuadro ExaltaciÃ³n de la Cruz" loading="lazy" />
         <div class="card-thumb-gradient"></div>
-        <span class="card-badge" style="background:rgba(212,17,50,0.15); border-color:rgba(212,17,50,0.3);">
-          <svg fill="none" viewBox="0 0 24 24" stroke="#d41132" stroke-width="2" width="12" height="12">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
-          </svg>
-          AR
-        </span>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
-        <p class="card-name">Cristo Yacente</p>
-        <p class="card-author">Gregorio Fernández · S. XVII</p>
+        <p class="card-name">Cuadro ExaltaciÃ³n de la Cruz</p>
+        <p class="card-author">Leandro Bassano Â· S. XVII</p>
         <div class="card-footer">
-          <span class="card-tag" style="color:var(--c-gold)">Disponible en App</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Pintura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 15: Cristo Atado a la Columna ──────────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 15: BargueÃ±o Relicario â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/bargueno-relicario">
       <div class="card-thumb">
-        <div class="card-placeholder-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-        </div>
+        <img src="/models/bargueno-relicario/bargueno-relicario.png" alt="BargueÃ±o Relicario" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
-        <p class="card-name">Cristo Atado a la Columna</p>
-        <p class="card-author">Anónimo</p>
+        <p class="card-name">BargueÃ±o Relicario</p>
+        <p class="card-author">AnÃ³nimo Â· S. XVI (1590â€“1595)</p>
         <div class="card-footer">
-          <span class="card-tag">Próximamente</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Escritorio relicario Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 16: Cuadro Exaltación de la Cruz ───────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 16: Casulla Santa Ana â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/casulla-santa-ana">
       <div class="card-thumb">
-        <div class="card-placeholder-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="card-name">Cuadro Exaltación de la Cruz</p>
-        <p class="card-author">Leandro Bassano</p>
-        <div class="card-footer">
-          <span class="card-tag">Próximamente</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── FIGURA 17: Bargueño Relicario ─────────────────────── -->
-    <div class="figure-card card-placeholder">
-      <div class="card-thumb">
-        <div class="card-placeholder-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="card-name">Bargueño Relicario</p>
-        <p class="card-author">Anónimo</p>
-        <div class="card-footer">
-          <span class="card-tag">Próximamente</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── FIGURA 18: Casulla Santa Ana ──────────────────────── -->
-    <div class="figure-card card-placeholder">
-      <div class="card-thumb">
-        <div class="card-placeholder-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-        </div>
+        <img src="/models/casulla-santa-ana/casulla-santa-ana.webp" alt="Casulla Santa Ana" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
         <p class="card-name">Casulla Santa Ana</p>
-        <p class="card-author">Textil litúrgico</p>
+        <p class="card-author">Religiosas del Monasterio Â· S. XVIII (1787)</p>
         <div class="card-footer">
-          <span class="card-tag">Próximamente</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Textil bordado Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 19: Novísimos ───────────────────────────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 17: Cristo Atado a la Columna â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/cristo-atado-a-la-columna">
       <div class="card-thumb">
-        <div class="card-placeholder-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-        </div>
+        <img src="/models/cristo-atado-a-la-columna/cristo-atado-a-la-columna.webp" alt="Cristo Atado a la Columna" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
-        <p class="card-name">Novísimos</p>
-        <p class="card-author">Giovanni Bernardino Azzolino</p>
+        <p class="card-name">Cristo Atado a la Columna</p>
+        <p class="card-author">AnÃ³nimo Â· S. XVII (h. 1640)</p>
         <div class="card-footer">
-          <span class="card-tag">Próximamente</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Escultura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 20: Reliquia Dorada ────────────────────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 18: Cristo Yacente â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/cristo-yacente">
       <div class="card-thumb">
-        <div class="card-placeholder-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-        </div>
+        <img src="/models/cristo-yacente/cristo-yacente.png" alt="Cristo Yacente" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
-        <p class="card-name">Reliquia Dorada</p>
-        <p class="card-author">Orfebrería religiosa</p>
+        <p class="card-name">Cristo Yacente</p>
+        <p class="card-author">Gregorio FernÃ¡ndez Â· S. XVII</p>
         <div class="card-footer">
-          <span class="card-tag">Próximamente</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Escultura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 21: San José con el Niño ───────────────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 19: NovÃ­simos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/novisimos">
       <div class="card-thumb">
-        <div class="card-placeholder-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-        </div>
+        <img src="/models/novisimos/novisimos.webp" alt="NovÃ­simos" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
-        <p class="card-name">San José con el Niño</p>
-        <p class="card-author">Escultura devocional</p>
+        <p class="card-name">NovÃ­simos</p>
+        <p class="card-author">Giovanni Bernardino Azzolino Â· S. XVII (1605)</p>
         <div class="card-footer">
-          <span class="card-tag">Próximamente</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">CeroplÃ¡stica Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
 
-    <!-- ── FIGURA 22: Tapiz ───────────────────────────────────── -->
-    <div class="figure-card card-placeholder">
+    <!-- â”€â”€ FIGURA 20: Custodia (Reliquia Dorada) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/reliquia-dorada">
       <div class="card-thumb">
-        <div class="card-placeholder-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <img src="/models/reliquia-dorada/reliquia-dorada.webp" alt="Custodia" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Custodia</p>
+        <p class="card-author">Taller de OrfebrerÃ­a Â· S. XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">OrfebrerÃ­a Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
+      </div>
+    </a>
+
+    <!-- â”€â”€ FIGURA 21: San JosÃ© con el NiÃ±o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/san-jose-con-el-nino">
+      <div class="card-thumb">
+        <img src="/models/san-jose-con-el-nino/san-jose-con-el-nino.webp" alt="San JosÃ© con el NiÃ±o" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">San JosÃ© con el NiÃ±o</p>
+        <p class="card-author">PrÃ³x. a La Roldana Â· S. XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Escultura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
+        </div>
+      </div>
+    </a>
+
+    <!-- â”€â”€ FIGURA 22: Tapiz â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/tapiz">
+      <div class="card-thumb">
+        <img src="/models/tapiz/tapiz.webp" alt="Tapiz" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
       </div>
       <div class="card-body">
         <p class="card-name">Tapiz</p>
-        <p class="card-author">Tejido histórico</p>
+        <p class="card-author">Manufactura Real Â· S. XVI</p>
         <div class="card-footer">
-          <span class="card-tag">Próximamente</span>
-          <span class="card-arrow">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
+          <span class="card-tag">Textil Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
         </div>
       </div>
-    </div>
+    </a>
+
+    <!-- â”€â”€ FIGURA 23: Virgen de la AsunciÃ³n â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <a class="figure-card" href="/virgen-asuncion">
+      <div class="card-thumb">
+        <img src="/models/virgen-asuncion/virgen-asuncion.webp" alt="Virgen de la AsunciÃ³n" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>AR</span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Virgen de la AsunciÃ³n</p>
+        <p class="card-author">AnÃ³nimo Â· S. XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Escultura Â· AR</span>
+          <span class="card-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg></span>
+        </div>
+      </div>
+    </a>
 
   </main>
 
-  <!-- ─── FOOTER ───────────────────────────────────────────── -->
+  <!-- â”€â”€â”€ FOOTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
   <footer class="site-footer">
-    <p>Museo de San Joaquín y Santa Ana</p>
+    <p>Museo de San JoaquÃ­n y Santa Ana</p>
   </footer>
 
 </body>
