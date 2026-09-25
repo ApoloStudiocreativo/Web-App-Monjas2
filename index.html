@@ -338,6 +338,351 @@
                 font-size: 0.7rem;
             }
         }
+    
+        /* ─── Visualizador Design Tokens & Styles ─── */
+        :root {
+            --c-bg:        #100609;
+            --c-surface:   #1a0b0e;
+            --c-border:    rgba(255,255,255,0.07);
+            --c-gold:      #ffbc02;
+            --c-gold-dim:  rgba(255,188,2,0.15);
+            --c-red:       #d41132;
+            --c-text:      #f0ece8;
+            --c-muted:     rgba(240,236,232,0.45);
+            --radius:      14px;
+            --transition:  0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        #home-section {
+            background: var(--c-bg) !important;
+            color: var(--c-text) !important;
+            overflow-y: auto !important;
+        }
+
+        /* ─── Site Header (Visualizador) ─── */
+        .site-header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(16,6,9,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--c-border);
+        }
+
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .header-logo img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 6px rgba(201,168,76,0.4));
+        }
+
+        .header-logo-text {
+            font-family: 'Noto Serif', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--c-text);
+            line-height: 1.2;
+            opacity: 0.85;
+        }
+
+        .header-logo-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--c-gold);
+            display: block;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--c-muted);
+            transition: color var(--transition);
+            font-weight: 500;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .back-btn:hover { color: var(--c-gold); }
+        .back-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+        /* ─── Hero ─── */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 72px 24px 64px;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -80px; left: 50%;
+            transform: translateX(-50%);
+            width: 600px; height: 400px;
+            background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--c-gold);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .hero-eyebrow::before,
+        .hero-eyebrow::after {
+            content: '';
+            display: block;
+            width: 28px; height: 1px;
+            background: var(--c-gold);
+            opacity: 0.5;
+        }
+
+        .hero h1 {
+            font-family: 'Noto Serif', serif;
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 300;
+            line-height: 1.2;
+            color: var(--c-text);
+            margin-bottom: 16px;
+        }
+
+        .hero h1 strong {
+            font-weight: 700;
+            display: block;
+        }
+
+        .hero-desc {
+            max-width: 520px;
+            margin: 0 auto;
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--c-muted);
+        }
+
+        /* ─── Divider ─── */
+        .divider {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--c-border);
+        }
+
+        .divider-label {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--c-muted);
+            white-space: nowrap;
+        }
+
+        /* ─── Grid ─── */
+        .catalog-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        /* ─── Card ─── */
+        .figure-card {
+            position: relative;
+            border-radius: var(--radius);
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+            animation: cardIn 0.5s ease backwards;
+        }
+
+        .figure-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(201,168,76,0.3);
+            box-shadow: 0 24px 48px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.1);
+        }
+
+        /* thumbnail */
+        .card-thumb {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            background: #0d0508;
+        }
+
+        .card-thumb img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+            filter: brightness(1);
+        }
+
+        .figure-card:hover .card-thumb img {
+            transform: scale(1.07);
+            filter: brightness(1);
+        }
+
+        .card-thumb-gradient {
+            position: absolute; inset: 0;
+            background: none;
+        }
+
+        /* badge */
+        .card-badge {
+            position: absolute;
+            top: 12px; right: 12px;
+            background: rgba(201,168,76,0.15);
+            border: 1px solid rgba(201,168,76,0.3);
+            backdrop-filter: blur(8px);
+            border-radius: 6px;
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--c-gold);
+            font-weight: 600;
+        }
+
+        .card-badge svg {
+            width: 12px; height: 12px;
+        }
+
+        /* card body */
+        .card-body {
+            padding: 18px 20px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .card-name {
+            font-family: 'Noto Serif', serif;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--c-text);
+        }
+
+        .card-author {
+            font-size: 12px;
+            color: var(--c-muted);
+            font-style: italic;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 14px;
+            border-top: 1px solid var(--c-border);
+        }
+
+        .card-tag {
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--c-red);
+            font-weight: 600;
+        }
+
+        .card-arrow {
+            width: 28px; height: 28px;
+            background: var(--c-gold-dim);
+            border: 1px solid rgba(201,168,76,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--transition), transform var(--transition);
+        }
+
+        .figure-card:hover .card-arrow {
+            background: var(--c-gold);
+            transform: translateX(2px);
+        }
+
+        .card-arrow svg {
+            width: 12px; height: 12px;
+            stroke: var(--c-gold);
+            transition: stroke var(--transition);
+        }
+
+        .figure-card:hover .card-arrow svg { stroke: #100609; }
+
+        /* ─── Footer ─── */
+        .site-footer {
+            border-top: 1px solid var(--c-border);
+            text-align: center;
+            padding: 24px;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--c-muted);
+        }
+
+        .site-footer a { color: var(--c-gold); text-decoration: none; }
+
+        #global-nav {
+            display: none !important;
+        }
+
+        @media (max-width: 600px) {
+            .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 0 16px 60px; }
+            .hero { padding: 48px 16px 40px; }
+        }
+
     </style>
 </head>
 
@@ -423,557 +768,584 @@
         </div>
     </section>
 
+        <!-- ============================================ -->
+    <!-- SECTION 2: HOME / VISUALIZADOR CATALOG -->
     <!-- ============================================ -->
-    <!-- SECTION 2: HOME / GALLERY -->
-    <!-- ============================================ -->
-    <section id="home-section" class="app-section fixed inset-0 overflow-hidden">
-        <!-- Top Navigation Bar -->
-        <div
-            class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-white/10">
-            <div class="flex items-center p-4 justify-between max-w-md mx-auto">
-                <div class="w-10"></div>
-                <h2
-                    class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center font-display">
-                    Museo Digital</h2>
-                <div class="flex w-10 items-center justify-end">
-                </div>
+    <section id="home-section" class="app-section fixed inset-0 overflow-y-auto">
+        <!-- Site Header -->
+        <header class="site-header">
+            <div class="header-inner">
+                <a href="/" class="header-logo" title="Inicio">
+                    <img src="Logotipo/Logotipo3.png" alt="Museo Logo" />
+                    <span class="header-logo-text">
+                        Museo de San Joaquín<br />
+                        <span class="header-logo-sub">y Santa Ana</span>
+                    </span>
+                </a>
+
+                <button id="home-to-splash-btn" class="back-btn" title="Portada">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Portada
+                </button>
             </div>
+        </header>
+
+        <!-- Hero -->
+        <section class="hero">
+            <p class="hero-eyebrow">Colección Digital</p>
+            <h1>Visualizador Interactivo<strong>de Figuras 3D</strong></h1>
+            <p class="hero-desc">
+                Explora las tallas y piezas de la colección del museo en un visualizador interactivo de Máxima calidad. Selecciona una figura para comenzar. <a href="https://www.apolostudio.es" target="_blank" rel="noopener" style="color:#ffbc02; text-decoration:none; font-weight:500;">Tecnología desarrollada por Apolo Studios</a>
+            </p>
+        </section>
+
+        <!-- Divider -->
+        <div class="divider">
+            <div class="divider-line"></div>
+            <span class="divider-label">Figuras disponibles</span>
+            <div class="divider-line"></div>
         </div>
 
-        <main class="max-w-md mx-auto pb-2 max-h-[calc(100vh-140px)] overflow-y-auto">
-            <!-- Hero Section -->
-            <div class="@container">
-                <div class="px-4 py-2">
-                    <div class="bg-cover bg-center flex flex-col justify-end overflow-hidden rounded-xl min-h-[280px] shadow-2xl relative border border-white/5"
-                        style='background-image: linear-gradient(0deg, rgba(34, 16, 19, 0.9) 0%, rgba(34, 16, 19, 0) 60%), url("Imagen portada/imagen-portada.jpg"); background-size: cover; background-repeat: no-repeat; background-position: center;'>
-                        <div class="flex flex-col p-6 gap-2">
-                            <p class="text-white tracking-tight text-3xl font-bold leading-tight font-display">
-                                Bienvenidos al Museo</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Catalog Grid -->
+        <main class="catalog-grid" id="catalog">
 
-            <!-- Grid Gallery -->
-            <div class="grid grid-cols-2 gap-3 px-4 pt-3 pb-2">
-                <!-- Item 0: Panorama 360 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer" id="panorama-slug">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Vista panorámica 360 del museo" src="models/HDR/HDR.jpg" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">360</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Vista 360º del Museo
-                        </h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Interactivo</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/visualizador/inmaculada/" id="card-inmaculada">
+      <div class="card-thumb">
+        <img src="/visualizador/inmaculada/virgen-inmaculada.webp?v=2" alt="Virgen Inmaculada" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          3D
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Virgen Inmaculada</p>
+        <p class="card-author">Autor: Anónimo · Siglo: XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Visualizador 3D</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 1 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Intricate sculpture of Jesus Christ with golden crown of thorns"
-                            src="models/jesus-en-la-cruz/jesus-en-la-cruz.webp" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cristo de papelón</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Fecha S. XVI</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/visualizador/mena/" id="card-mena">
+      <div class="card-thumb">
+        <img src="/visualizador/mena/mena.webp" alt="Virgen de Mena" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          3D
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Virgen de Mena</p>
+        <p class="card-author">Autor: Pedro de Mena · Siglo: XVII</p>
+        <div class="card-footer">
+          <span class="card-tag">Visualizador 3D</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 2 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Mantle and face of a Virgin Mary sculpture with ornate silver details"
-                            src="models/virgen-de-mena/virgen-de-mena.png" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Virgen de Mena</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Pedro de Mena</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/visualizador/romanica/" id="card-romanica">
+      <div class="card-thumb">
+        <img src="/visualizador/romanica/romanica.webp" alt="Figura Románica" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          3D
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Figura Románica</p>
+        <p class="card-author">Arte Románico</p>
+        <div class="card-footer">
+          <span class="card-tag">Visualizador 3D</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 3 -->
-                <div class="group relative flex flex-col gap-3 mt-2 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Detail of hands on a religious figure holding a cross"
-                            src="models/ecce-homo/ecce-homo.webp" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Ecce Homo</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Francisco Alonso de los
-                            Rios</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/visualizador/sanbernardo/" id="card-sanbernardo">
+      <div class="card-thumb">
+        <img src="/visualizador/sanbernardo/miniatura.webp" alt="San Bernardo con la Virgen" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          3D
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">San Bernardo con la Virgen</p>
+        <p class="card-author">Autor: Luis Salvador Carmona · Siglo: XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Visualizador 3D</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 4 -->
-                <div class="group relative flex flex-col gap-3 mt-2 cursor-pointer" data-explore-button="true">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <div
-                            class="h-full w-full bg-primary/20 flex flex-col items-center justify-center p-6 text-center border-2 border-dashed border-primary/40 rounded-xl">
-                            <span class="material-symbols-outlined text-primary text-3xl mb-2">add_circle</span>
-                            <p class="text-xs font-bold text-primary uppercase tracking-tighter">Ver más tallas
-                            </p>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug"></h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic"></p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/HDR" id="card-hdr" data-slug="HDR">
+      <div class="card-thumb">
+        <img src="/models/HDR/HDR.jpg" alt="Vista 360º del Museo" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge" style="background:rgba(255,188,2,0.15); border-color:rgba(255,188,2,0.3); color:#ffbc02;">
+          
+          360°
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Vista 360º del Museo</p>
+        <p class="card-author">Recorrido panorámico interactivo</p>
+        <div class="card-footer">
+          <span class="card-tag">Interactivo</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Hidden Gallery Items (18 more) -->
-                <!-- Item 5 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Cuadro Bayeu Inmculada Concepcion"
-                            src="models/bayeu-inmaculada/bayeu-inmaculada.webp?t=1" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro Bayeu
-                            Inmaculada</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Ramón Bayeu</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/jesus-en-la-cruz" id="card-jesus-en-la-cruz" data-slug="jesus-en-la-cruz">
+      <div class="card-thumb">
+        <img src="/models/jesus-en-la-cruz/jesus-en-la-cruz.webp" alt="Cristo de papelón" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Cristo de papelón</p>
+        <p class="card-author">Francisco Antonio Ruiz Gijón · S. XVI</p>
+        <div class="card-footer">
+          <span class="card-tag">Escultura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 6 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Cuadro Bayeu San Benito" src="models/bayeu-san-benito/bayeu-san-benito.webp?t=1" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro Bayeu San
-                            Benito</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Ramón Bayeu</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/ecce-homo" id="card-ecce-homo" data-slug="ecce-homo">
+      <div class="card-thumb">
+        <img src="/models/ecce-homo/ecce-homo.webp" alt="Ecce Homo" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Ecce Homo</p>
+        <p class="card-author">Francisco Alonso de los Ríos · S. XVII</p>
+        <div class="card-footer">
+          <span class="card-tag">Escultura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 7 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Cuadro Bayeu Santa Escolástica"
-                            src="models/bayeu-santa-gertrudis/bayeu-santa-gertrudis.webp?t=1" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro Bayeu Santa
-                            Escolástica</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Ramón Bayeu</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/bayeu-inmaculada" id="card-bayeu-inmaculada" data-slug="bayeu-inmaculada">
+      <div class="card-thumb">
+        <img src="/models/bayeu-inmaculada/bayeu-inmaculada.webp" alt="Cuadro Bayeu Inmaculada" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Cuadro Bayeu Inmaculada</p>
+        <p class="card-author">Ramón Bayeu · S. XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Pintura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 8 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Cuadro Goya El tránsito de San José"
-                            src="models/goya-transito-de-san-jose/goya-transito-de-san-jose.webp" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro Goya Tránsito
-                            de San José</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Francisco de Goya</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/bayeu-san-benito" id="card-bayeu-san-benito" data-slug="bayeu-san-benito">
+      <div class="card-thumb">
+        <img src="/models/bayeu-san-benito/bayeu-san-benito.webp" alt="Cuadro Bayeu San Benito" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Cuadro Bayeu San Benito</p>
+        <p class="card-author">Ramón Bayeu · S. XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Pintura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 9 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Cuadro Goya San Bernardo"
-                            src="models/goya-san-carlos-borromeo/goya-san-carlos-borromeo.webp?t=1" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro Goya San
-                            Bernardo</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Francisco de Goya</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/bayeu-santa-gertrudis" id="card-bayeu-santa-gertrudis" data-slug="bayeu-santa-gertrudis">
+      <div class="card-thumb">
+        <img src="/models/bayeu-santa-gertrudis/bayeu-santa-gertrudis.webp" alt="Cuadro Bayeu Santa Escolástica" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Cuadro Bayeu Santa Escolástica</p>
+        <p class="card-author">Ramón Bayeu · S. XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Pintura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 10 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Cuadro Goya Santa lutgarda"
-                            src="models/goya-santa-engracia/goya-santa-engracia.webp?t=1" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro Goya Santa
-                            Lutgarda</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Francisco de Goya</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/goya-transito-de-san-jose" id="card-goya-transito" data-slug="goya-transito-de-san-jose">
+      <div class="card-thumb">
+        <img src="/models/goya-transito-de-san-jose/goya-transito-de-san-jose.webp" alt="Cuadro Goya Tránsito de San José" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Cuadro Goya Tránsito de San José</p>
+        <p class="card-author">Francisco de Goya · S. XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Pintura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 11 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Cuadro La elevación de la cruz"
-                            src="models/la-elevacion-de-la-cruz/la-elevacion-de-la-cruz.webp?t=1" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro la exaltación
-                            de la crúz</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Leandro Bassano</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/goya-san-carlos-borromeo" id="card-goya-san-carlos" data-slug="goya-san-carlos-borromeo">
+      <div class="card-thumb">
+        <img src="/models/goya-san-carlos-borromeo/goya-san-carlos-borromeo.webp" alt="Cuadro Goya San Bernardo" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Cuadro Goya San Bernardo</p>
+        <p class="card-author">Francisco de Goya · S. XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Pintura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 12 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Bargueño relicario" src="models/bargueno-relicario/bargueno-relicario.png" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Bargueño relicario
-                        </h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Anónimo</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/goya-santa-engracia" id="card-goya-santa-engracia" data-slug="goya-santa-engracia">
+      <div class="card-thumb">
+        <img src="/models/goya-santa-engracia/goya-santa-engracia.webp" alt="Cuadro Goya Santa Lutgarda" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Cuadro Goya Santa Lutgarda</p>
+        <p class="card-author">Francisco de Goya · S. XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Pintura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 13 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="San Pedro Apóstol" src="models/casulla-santa-ana/casulla-santa-ana.webp" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Casulla Santa Ana</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic"></p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/la-elevacion-de-la-cruz" id="card-elevacion-cruz" data-slug="la-elevacion-de-la-cruz">
+      <div class="card-thumb">
+        <img src="/models/la-elevacion-de-la-cruz/la-elevacion-de-la-cruz.webp" alt="Cuadro Exaltación de la Cruz" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Cuadro Exaltación de la Cruz</p>
+        <p class="card-author">Leandro Bassano · S. XVII</p>
+        <div class="card-footer">
+          <span class="card-tag">Pintura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 14 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Cristo atado a la columna"
-                            src="models/cristo-atado-a-la-columna/cristo-atado-a-la-columna.webp" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cristo atado a la
-                            columna</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Anónimo</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/bargueno-relicario" id="card-bargueno" data-slug="bargueno-relicario">
+      <div class="card-thumb">
+        <img src="/models/bargueno-relicario/bargueno-relicario.png" alt="Bargueño Relicario" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Bargueño Relicario</p>
+        <p class="card-author">Anónimo · S. XVI (1590–1595)</p>
+        <div class="card-footer">
+          <span class="card-tag">Escritorio relicario · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 15 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Cristo Yacente" src="models/cristo-yacente/cristo-yacente.png" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cristo Yacente</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Gregorio Fernández</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/casulla-santa-ana" id="card-casulla" data-slug="casulla-santa-ana">
+      <div class="card-thumb">
+        <img src="/models/casulla-santa-ana/casulla-santa-ana.webp" alt="Casulla Santa Ana" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Casulla Santa Ana</p>
+        <p class="card-author">Religiosas del Monasterio · S. XVIII (1787)</p>
+        <div class="card-footer">
+          <span class="card-tag">Textil bordado · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 16 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Novisimos" src="models/novisimos/novisimos.webp" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Novisimos</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Giovanni Bernardino
-                            Azzolino</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/cristo-atado-a-la-columna" id="card-cristo-columna" data-slug="cristo-atado-a-la-columna">
+      <div class="card-thumb">
+        <img src="/models/cristo-atado-a-la-columna/cristo-atado-a-la-columna.webp" alt="Cristo Atado a la Columna" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Cristo Atado a la Columna</p>
+        <p class="card-author">Anónimo · S. XVII (h. 1640)</p>
+        <div class="card-footer">
+          <span class="card-tag">Escultura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 17 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Virgen de la Soledad" src="models/reliquia-dorada/reliquia-dorada.webp" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Reliquia Dorada</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic"></p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/cristo-yacente" id="card-cristo-yacente" data-slug="cristo-yacente">
+      <div class="card-thumb">
+        <img src="/models/cristo-yacente/cristo-yacente.png" alt="Cristo Yacente" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Cristo Yacente</p>
+        <p class="card-author">Gregorio Fernández · S. XVII</p>
+        <div class="card-footer">
+          <span class="card-tag">Escultura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 18 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="San Bernardo con la Virgen"
-                            src="models/san-bernardo-con-la-virgen/san-bernardo-con-la-virgen.webp" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">San Bernardo con la
-                            Virgen</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Luis Salvador Carmona
-                        </p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/novisimos" id="card-novisimos" data-slug="novisimos">
+      <div class="card-thumb">
+        <img src="/models/novisimos/novisimos.webp" alt="Novísimos" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Novísimos</p>
+        <p class="card-author">Giovanni Bernardino Azzolino · S. XVII (1605)</p>
+        <div class="card-footer">
+          <span class="card-tag">Ceroplástica · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 19 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="San Longinos" src="models/san-jose-con-el-nino/san-jose-con-el-nino.webp" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">San José con el Niño
-                        </h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic"></p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/reliquia-dorada" id="card-reliquia-dorada" data-slug="reliquia-dorada">
+      <div class="card-thumb">
+        <img src="/models/reliquia-dorada/reliquia-dorada.webp" alt="Custodia" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Custodia</p>
+        <p class="card-author">Taller de Orfebrería · S. XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Orfebrería · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 20 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Tapiz" src="models/tapiz/tapiz.webp" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Tapiz
-                        </h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic"></p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/san-jose-con-el-nino" id="card-san-jose" data-slug="san-jose-con-el-nino">
+      <div class="card-thumb">
+        <img src="/models/san-jose-con-el-nino/san-jose-con-el-nino.webp" alt="San José con el Niño" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">San José con el Niño</p>
+        <p class="card-author">Próx. a La Roldana · S. XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Escultura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 21 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Cristo del Perdón" src="models/virgen-asuncion/virgen-asuncion.webp" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Virgen Inmaculada</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Anónimo</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/tapiz" id="card-tapiz" data-slug="tapiz">
+      <div class="card-thumb">
+        <img src="/models/tapiz/tapiz.webp" alt="Tapiz" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Tapiz</p>
+        <p class="card-author">Manufactura Real · S. XVI</p>
+        <div class="card-footer">
+          <span class="card-tag">Textil · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-                <!-- Item 22 -->
-                <div class="group relative flex flex-col gap-3 cursor-pointer">
-                    <div
-                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Virgen del Rosario" src="models/virgen-romanica/virgen-romanica.png" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
-                        </div>
-                        <div class="absolute bottom-3 right-3">
-                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
-                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-1">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Virgen Románica</h3>
-                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Anónimo</p>
-                    </div>
-                </div>
+    <a class="figure-card" href="/virgen-asuncion" id="card-virgen-asuncion" data-slug="virgen-asuncion">
+      <div class="card-thumb">
+        <img src="/models/virgen-asuncion/virgen-asuncion.webp" alt="Virgen de la Asunción" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" /></svg>
+          AR
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Virgen de la Asunción</p>
+        <p class="card-author">Anónimo · S. XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Escultura · AR</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
 
-            </div>
-
-
-            <!-- Developer Footer -->
-            <div class="w-full py-8 text-center">
-                <a href="https://www.apolostudio.es" target="_blank" rel="noopener noreferrer"
-                    class="text-[10px] text-slate-400 dark:text-gray-500 uppercase tracking-widest hover:text-primary transition-colors font-medium">
-                    Desarrollado por Apolo Studios
-                </a>
-            </div>
         </main>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <p>Museo de San Joaquín y Santa Ana · <a href="https://www.apolostudio.es" target="_blank" rel="noopener">Apolo Studios</a></p>
+        </footer>
     </section>
 
     <!-- ============================================ -->

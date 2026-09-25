@@ -421,9 +421,6 @@ class MuseumApp {
         this.setupEventListeners();
         this.setupGalleryClickHandlers();
         this.setupPanoramaHandler();
-        this.setupExploreButtonHandler();
-        this.hideInitialGalleryItems();
-        this.updateGalleryTitles();
         this.addParallaxEffect();
         this.setupURLRouting();
 
@@ -853,20 +850,67 @@ class MuseumApp {
     }
 
     setupGalleryClickHandlers() {
-        // Add click handlers to all gallery items
-        const galleryItems = document.querySelectorAll('#home-section .group.relative.flex.flex-col');
+        // Add click handlers to all visualizador figure cards
+        const figureCards = document.querySelectorAll('#home-section .figure-card');
 
-        galleryItems.forEach((item, index) => {
-            // Skip the explore button and panorama slug
-            if (item.hasAttribute('data-explore-button') || item.id === 'panorama-slug') return;
+        figureCards.forEach((card) => {
+            const href = card.getAttribute('href');
+            const slug = card.getAttribute('data-slug');
 
-            item.addEventListener('click', () => {
-                console.log(`🖼️ Opening model: index ${index}`);
-                this.openModelDetail(index, true); // true = update URL
-            });
+            if (!href) return;
+
+            // Las 4 figuras PlayCanvas navegan a su subcarpeta
+            if (href.startsWith('/visualizador/')) {
+                return;
+            }
+
+            // Panorama 360 interactivo
+            if (slug === 'HDR' || href === '/HDR') {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const requestGyroAndOpen = (gyroGranted) => {
+                        this._navigateSectionImmediate('panorama');
+                        history.pushState({ section: 'panorama' }, '', '/HDR');
+                        this.openPanorama(gyroGranted);
+                    };
+
+                    if (
+                        typeof DeviceOrientationEvent !== 'undefined' &&
+                        typeof DeviceOrientationEvent.requestPermission === 'function'
+                    ) {
+                        DeviceOrientationEvent.requestPermission()
+                            .then((permission) => requestGyroAndOpen(permission === 'granted'))
+                            .catch(() => requestGyroAndOpen(false));
+                    } else {
+                        requestGyroAndOpen(true);
+                    }
+                });
+                return;
+            }
+
+            // Modelos 3D y AR de la app
+            if (slug) {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.openModelBySlug(slug, true);
+                });
+            }
         });
 
-        // Back button handler
+        // Portada button in home header
+        const homeToSplashBtn = document.getElementById('home-to-splash-btn');
+        if (homeToSplashBtn) {
+            homeToSplashBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                history.pushState({ section: 'splash' }, '', '/');
+                this.navigateToSection('splash');
+            });
+        }
+
+        // Back button handler in model detail
         const backBtn = document.getElementById('back-to-home-btn');
         if (backBtn) {
             backBtn.addEventListener('click', () => {
