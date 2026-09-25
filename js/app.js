@@ -900,16 +900,6 @@ class MuseumApp {
             }
         });
 
-        // Portada button in home header
-        const homeToSplashBtn = document.getElementById('home-to-splash-btn');
-        if (homeToSplashBtn) {
-            homeToSplashBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                history.pushState({ section: 'splash' }, '', '/');
-                this.navigateToSection('splash');
-            });
-        }
-
         // Back button handler in model detail
         const backBtn = document.getElementById('back-to-home-btn');
         if (backBtn) {
