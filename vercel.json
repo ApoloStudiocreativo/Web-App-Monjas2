@@ -1,0 +1,64 @@
+{
+    "rewrites": [
+        {
+            "source": "/visualizador",
+            "destination": "/visualizador/index.html"
+        },
+        {
+            "source": "/visualizador/",
+            "destination": "/visualizador/index.html"
+        },
+        {
+            "source": "/visualizador/:figura",
+            "destination": "/visualizador/:figura/index.html"
+        },
+        {
+            "source": "/visualizador/:figura/",
+            "destination": "/visualizador/:figura/index.html"
+        },
+        {
+            "source": "/:slug",
+            "destination": "/index.html"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/models/(.*)\\.usdz",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "model/vnd.usdz+zip"
+                },
+                {
+                    "key": "Content-Disposition",
+                    "value": "inline"
+                },
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                }
+            ]
+        },
+        {
+            "source": "/models/(.*)\\.glb",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "model/gltf-binary"
+                },
+                {
+                    "key": "Content-Disposition",
+                    "value": "inline"
+                },
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                },
+                {
+                    "key": "X-Robots-Tag",
+                    "value": "noindex, nofollow"
+                }
+            ]
+        }
+    ]
+}

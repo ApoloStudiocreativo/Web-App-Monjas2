@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizador de Figuras – Museo de San Joaquín y Santa Ana</title>
+  <meta name="description" content="Catálogo interactivo de figuras del Museo de San Joaquín y Santa Ana. Explora las tallas y piezas del museo en un visualizador 3D con PlayCanvas." />
+  <link rel="icon" href="/Logotipo/isotipo.png" type="image/png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset & Tokens ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --c-bg:        #100609;
+      --c-surface:   #1a0b0e;
+      --c-border:    rgba(255,255,255,0.07);
+      --c-gold:      #ffbc02;
+      --c-gold-dim:  rgba(255,188,2,0.15);
+      --c-red:       #d41132;
+      --c-text:      #f0ece8;
+      --c-muted:     rgba(240,236,232,0.45);
+      --radius:      14px;
+      --transition:  0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--c-bg);
+      color: var(--c-text);
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ─── Noise overlay ────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ─── Header ───────────────────────────────────────────── */
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(16,6,9,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .header-logo img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 6px rgba(201,168,76,0.4));
+    }
+
+    .header-logo-text {
+      font-family: 'Noto Serif', serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--c-text);
+      line-height: 1.2;
+      opacity: 0.85;
+    }
+
+    .header-logo-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      display: block;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+      transition: color var(--transition);
+      font-weight: 500;
+    }
+    .back-btn:hover { color: var(--c-gold); }
+    .back-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* ─── Hero ─────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 72px 24px 64px;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 28px; height: 1px;
+      background: var(--c-gold);
+      opacity: 0.5;
+    }
+
+    .hero h1 {
+      font-family: 'Noto Serif', serif;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--c-text);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 strong {
+      font-weight: 700;
+      display: block;
+    }
+
+    .hero-desc {
+      max-width: 520px;
+      margin: 0 auto;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--c-muted);
+    }
+
+    /* ─── Divider ──────────────────────────────────────────── */
+    .divider {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--c-border);
+    }
+
+    .divider-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+      white-space: nowrap;
+    }
+
+    /* ─── Grid ─────────────────────────────────────────────── */
+    .catalog-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    /* ─── Card ─────────────────────────────────────────────── */
+    .figure-card {
+      position: relative;
+      border-radius: var(--radius);
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      animation: cardIn 0.5s ease backwards;
+    }
+
+    .figure-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(201,168,76,0.3);
+      box-shadow: 0 24px 48px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.1);
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .figure-card:nth-child(1)  { animation-delay: 0.05s; }
+    .figure-card:nth-child(2)  { animation-delay: 0.10s; }
+    .figure-card:nth-child(3)  { animation-delay: 0.15s; }
+    .figure-card:nth-child(4)  { animation-delay: 0.20s; }
+    .figure-card:nth-child(5)  { animation-delay: 0.25s; }
+    .figure-card:nth-child(6)  { animation-delay: 0.30s; }
+    .figure-card:nth-child(7)  { animation-delay: 0.35s; }
+    .figure-card:nth-child(8)  { animation-delay: 0.40s; }
+    .figure-card:nth-child(9)  { animation-delay: 0.45s; }
+    .figure-card:nth-child(10) { animation-delay: 0.50s; }
+
+    /* thumbnail */
+    .card-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: #0d0508;
+    }
+
+    .card-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+      filter: brightness(1);
+    }
+
+    .figure-card:hover .card-thumb img {
+      transform: scale(1.07);
+      filter: brightness(1);
+    }
+
+    .card-thumb-gradient {
+      position: absolute; inset: 0;
+      background: none;
+    }
+
+    /* 3D badge */
+    .card-badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.3);
+      backdrop-filter: blur(8px);
+      border-radius: 6px;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #000;
+      font-weight: 600;
+    }
+
+    .card-badge svg {
+      width: 12px; height: 12px;
+    }
+
+    /* card body */
+    .card-body {
+      padding: 18px 20px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .card-name {
+      font-family: 'Noto Serif', serif;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--c-text);
+    }
+
+    .card-author {
+      font-size: 12px;
+      color: var(--c-muted);
+      font-style: italic;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--c-border);
+    }
+
+    .card-tag {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--c-red);
+      font-weight: 600;
+    }
+
+    .card-arrow {
+      width: 28px; height: 28px;
+      background: var(--c-gold-dim);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .figure-card:hover .card-arrow {
+      background: var(--c-gold);
+      transform: translateX(2px);
+    }
+
+    .card-arrow svg {
+      width: 12px; height: 12px;
+      stroke: var(--c-gold);
+      transition: stroke var(--transition);
+    }
+
+    .figure-card:hover .card-arrow svg { stroke: #100609; }
+
+    /* placeholder card (sin datos aún) */
+    .card-placeholder .card-thumb {
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(201,168,76,0.03) 0, rgba(201,168,76,0.03) 1px,
+        transparent 1px, transparent 12px
+      ), #0d0508;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-placeholder-icon {
+      opacity: 0.2;
+    }
+
+    .card-placeholder-icon svg {
+      width: 48px; height: 48px;
+      stroke: var(--c-gold);
+    }
+
+    /* ─── Empty state ──────────────────────────────────────── */
+    .empty-card {
+      border: 2px dashed rgba(201,168,76,0.15);
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 24px;
+      min-height: 280px;
+      color: var(--c-muted);
+      gap: 12px;
+      cursor: default;
+    }
+
+    .empty-card svg { width: 32px; height: 32px; opacity: 0.3; stroke: var(--c-gold); }
+    .empty-card p { font-size: 13px; }
+
+    /* ─── Footer ───────────────────────────────────────────── */
+    .site-footer {
+      border-top: 1px solid var(--c-border);
+      text-align: center;
+      padding: 24px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+    }
+
+    .site-footer a { color: var(--c-gold); text-decoration: none; }
+
+    /* ─── Responsive ───────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 0 16px 60px; }
+      .hero { padding: 48px 16px 40px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── HEADER ─────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="header-logo" title="Volver al inicio">
+        <img src="/Logotipo/Logotipo3.png" alt="Museo Logo" />
+        <span class="header-logo-text">
+          Museo de San Joaquín<br />
+          <span class="header-logo-sub">y Santa Ana</span>
+        </span>
+      </a>
+
+      <a href="/" class="back-btn">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Volver
+      </a>
+    </div>
+  </header>
+
+  <!-- ─── HERO ────────────────────────────────────────────── -->
+  <section class="hero">
+    <p class="hero-eyebrow">Colección Digital</p>
+    <h1>Visualizador Interactivo<strong>de Figuras 3D</strong></h1>
+    <p class="hero-desc">
+      Explora las tallas y piezas de la colección del museo en un visualizador interactivo de Máxima calidad. Selecciona una figura para comenzar. <a href="https://www.apolostudio.es" target="_blank" rel="noopener" style="color:#5b7b91; text-decoration:none; font-weight:500;">Tecnología desarrollada por Apolo Studios</a>
+    </p>
+  </section>
+
+  <!-- ─── CATÁLOGO ─────────────────────────────────────────── -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-label">Figuras disponibles</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <main class="catalog-grid" id="catalog">
+
+    <!--
+    ╔══════════════════════════════════════════════════════════╗
+    ║  INSTRUCCIONES PARA AÑADIR UNA FIGURA NUEVA             ║
+    ║                                                         ║
+    ║  1. Duplica el bloque <a class="figure-card"> de abajo ║
+    ║  2. Cambia el href al slug de la figura                 ║
+    ║     Ej: href="visualizador/nombre-figura/"              ║
+    ║  3. Actualiza: imagen, nombre, autor y categoría        ║
+    ║  4. Crea la carpeta: visualizador/nombre-figura/        ║
+    ║     con un index.html (usa la plantilla existe)         ║
+    ╚══════════════════════════════════════════════════════════╝
+    -->
+
+    <!-- ════════════════════════════════════════════════════════
+         INSTRUCCIÓN PARA AÑADIR UNA FIGURA NUEVA:
+         1. Duplica el bloque <a class="figure-card"> de abajo
+         2. Cambia href="/visualizador/NOMBRE-CARPETA/"
+         3. Actualiza imagen, nombre, autor, categoría
+         4. La carpeta NOMBRE-CARPETA/ debe tener su propio index.html con PlayCanvas
+         ════════════════════════════════════════════════════════ -->
+
+    <!-- ── FIGURA 1: figura-ejemplo ── ✅ ACTIVA ──────────── -->
+    <a class="figure-card" href="/visualizador/inmaculada/" id="card-inmaculada">
+      <div class="card-thumb">
+        <img src="/visualizador/inmaculada/virgen-inmaculada.webp?v=2" alt="Virgen Inmaculada" loading="lazy" />
+        <div class="card-thumb-gradient"></div>
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+          </svg>
+          3D
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Virgen Inmaculada</p>
+        <p class="card-author">Autor:Anónimo· Siglo:XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Visualizador 3D</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- ── FIGURA 2: mena ─────────────────────────────── -->
+    <a class="figure-card" href="/visualizador/mena/" id="card-mena">
+      <div class="card-thumb">
+        <img src="/visualizador/mena/mena.webp" alt="Figura Mena" loading="lazy" />
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+          </svg>
+          3D
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Virgen de Mena</p>
+        <p class="card-author">Autor:Pedro de Mena· Siglo:XVII</p>
+        <div class="card-footer">
+          <span class="card-tag">Visualizador 3D</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- ── FIGURA 3: romanica ─────────────────────────────── -->
+    <a class="figure-card" href="/visualizador/romanica/" id="card-romanica">
+      <div class="card-thumb">
+        <img src="/visualizador/romanica/romanica.webp" alt="Figura Románica" loading="lazy" />
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+          </svg>
+          3D
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">Figura Románica</p>
+        <p class="card-author">Arte Románico</p>
+        <div class="card-footer">
+          <span class="card-tag">Visualizador 3D</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- ── FIGURA 4: sanbernardo ─────────────────────────────── -->
+    <a class="figure-card" href="/visualizador/sanbernardo/" id="card-sanbernardo">
+      <div class="card-thumb">
+        <img src="/visualizador/sanbernardo/miniatura.webp" alt="San Bernardo" loading="lazy" />
+        <span class="card-badge">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+          </svg>
+          3D
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="card-name">San Bernardo con la Virgen</p>
+        <p class="card-author">Autor:Luis Salvador Carmona· Siglo:XVIII</p>
+        <div class="card-footer">
+          <span class="card-tag">Visualizador 3D</span>
+          <span class="card-arrow">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
+
+  </main>
+
+  <!-- ─── FOOTER ───────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>Museo de San Joaquín y Santa Ana</p>
+  </footer>
+
+</body>
+</html>

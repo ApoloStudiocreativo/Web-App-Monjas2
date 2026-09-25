@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Museo Interactivo de Semana Santa</title>
+    <meta name="description"
+        content="Experiencia digital inmersiva del Museo de Semana Santa - Explora nuestro patrimonio cultural en 3D" />
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#d41132">
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d41132",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221013",
+                        "deep-charcoal": "#120809",
+                        "accent-gold": "#D4AF37",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+
+    </script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch((err) => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+
+    <!-- Desktop Restriction -->
+    <script src="js/desktop-view.js"></script>
+
+    <!-- Model Viewer -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+
+    <!-- Pannellum (360 Panorama) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+    <style>
+        .museum-texture {
+            background-image: radial-gradient(circle at center, rgba(212, 17, 50, 0.05) 0%, transparent 70%);
+        }
+
+        body {
+            min-height: max(884px, 100dvh);
+            font-family: 'Noto Serif', serif;
+        }
+
+        /* Section Management */
+        .app-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none;
+        }
+
+        .app-section.active {
+            display: block;
+            opacity: 1;
+            pointer-events: auto;
+            animation: fadeInSection 0.5s ease-in-out forwards;
+        }
+
+        .app-section.active.flex {
+            display: flex !important;
+        }
+
+        @keyframes fadeInSection {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Smooth transitions */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Prevent scroll on splash screen */
+        body:has(#splash-section.active) {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Ensure navigation bars always work */
+        nav {
+            pointer-events: auto !important;
+        }
+
+        /* Prevent body scroll on all sections except splash */
+        body:not(:has(#splash-section.active)) {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Smooth icon rotation for explore button */
+        .material-symbols-outlined {
+            transition: transform 0.3s ease;
+        }
+
+        /* ============================================
+           DESKTOP RESPONSIVE LAYOUT (>=1024px)
+           Las secciones siguen siendo fixed/inset-0
+           Solo se amplian los contenedores internos.
+           ============================================ */
+        @media (min-width: 1024px) {
+
+            /* ── HOME GALLERY ── */
+            /* Header: ancho completo */
+            #home-section > div:first-child > div {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 1rem 3rem;
+            }
+
+            /* Galería: sin límite de ancho, sin límite de altura */
+            #home-section > main {
+                max-width: 1400px;
+                margin: 0 auto;
+                max-height: calc(100vh - 60px);
+                padding: 0 3rem 6rem;
+            }
+
+            /* Hero banner: más alto */
+            #home-section > main [style*="background-image"] {
+                min-height: 360px;
+            }
+
+            /* Grid: 4 columnas */
+            #home-section > main .grid.grid-cols-2 {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 1.5rem;
+                padding: 1.5rem 0;
+            }
+
+            /* Títulos de tarjeta: algo más grandes */
+            #home-section > main .grid.grid-cols-2 > div h3 {
+                font-size: 0.9rem;
+            }
+
+            /* ── MODEL DETAIL VIEWER ── */
+            /* Header: ancho completo */
+            #model-detail-section header > div {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 1rem 3rem;
+            }
+
+            /* Main: layout 2 columnas (visor | info) — visor 2x más ancho */
+            #model-detail-section > main {
+                max-width: 1400px;
+                margin: 0 auto;
+                max-height: calc(100vh - 60px);
+                overflow-y: auto;
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 3rem;
+                padding: 2rem 3rem 6rem;
+                align-items: start;
+            }
+
+            /* Visor pegado arriba mientras la info scrollea */
+            #model-detail-section > main > div:first-child {
+                position: sticky;
+                top: 1rem;
+            }
+
+            /* Visor: aspecto 4/5 (más alto) en columna grande */
+            #model-detail-section > main > div:first-child > div > div {
+                aspect-ratio: 4 / 5;
+            }
+
+            /* ── NAVEGACIÓN ── */
+            /* Mantener FIJA en la parte inferior, centrada y visible */
+            #global-nav {
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                top: auto !important;
+                padding: 0.5rem 2rem 1rem;
+                border-top: 1px solid rgba(255,255,255,0.1);
+                border-bottom: none;
+            }
+            #global-nav > div {
+                max-width: 600px;
+                margin: 0 auto;
+                justify-content: center;
+                gap: 4rem;
+            }
+            /* Iconos y texto de nav: algo más grandes en desktop */
+            #global-nav .material-symbols-outlined {
+                font-size: 1.5rem;
+            }
+            #global-nav span:not(.material-symbols-outlined) {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white">
+
+    <!-- Global Loading Overlay -->
+    <div id="loading-overlay"
+        class="fixed inset-0 z-[200] bg-background-light dark:bg-deep-charcoal flex flex-col items-center justify-center hidden">
+        <div class="flex flex-col items-center gap-6">
+            <!-- Icon -->
+            <img src="Logotipo/isotipo.png" alt="Cargando" class="w-16 h-16 object-contain animate-bounce" />
+
+            <!-- Progress Bar -->
+            <div class="w-64 h-1 bg-white/10 rounded-full overflow-hidden relative">
+                <div id="loading-progress" class="absolute left-0 top-0 bottom-0 bg-primary w-0"></div>
+            </div>
+
+            <p class="text-[10px] text-white/40 tracking-[0.3em] font-medium uppercase animate-pulse">
+                Cargando experiencia...
+            </p>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SECTION 1: SPLASH SCREEN -->
+    <!-- ============================================ -->
+    <section id="splash-section" class="app-section active fixed inset-0 overflow-hidden">
+        <div
+            class="relative flex h-full w-full flex-col items-center justify-between bg-background-light dark:bg-deep-charcoal transition-colors duration-500">
+
+
+            <!-- Main Content Area -->
+            <div class="flex flex-1 flex-col items-center justify-center w-full px-6 museum-texture fade-in">
+                <!-- Central Logo / Icon -->
+                <div class="relative mb-8">
+                    <!-- Subtle glow behind icon -->
+                    <div class="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-150 pulse-glow"></div>
+                    <div
+                        class="relative flex items-center justify-center w-32 h-32 border border-white/10 rounded-full bg-white/5 backdrop-blur-sm">
+                        <img src="Logotipo/Logotipo3.png" alt="Museo Logo"
+                            class="w-full h-full object-contain p-4 opacity-90 drop-shadow-lg translate-x-1 -translate-y-1" />
+                    </div>
+                </div>
+
+                <!-- Headline -->
+                <div class="text-center space-y-2 max-w-lg">
+                    <h1 class="text-white tracking-widest text-3xl font-light leading-tight uppercase">
+                        Museo de <br /> <span class="font-bold">San Joaquín y Santa Ana</span>
+                    </h1>
+                    <div class="h-px w-12 bg-primary mx-auto my-4 opacity-60"></div>
+                    <p class="text-white/60 text-sm font-normal leading-relaxed tracking-widest uppercase">
+                        Experiencia virtual
+                    </p>
+                </div>
+            </div>
+
+            <!-- Bottom Action Area -->
+            <div class="w-full px-6 pb-12 flex flex-col items-center gap-6 fade-in">
+                <!-- Enter Button -->
+                <div class="flex w-full max-w-[280px] justify-center">
+                    <button id="enter-btn"
+                        class="group relative flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 px-8 bg-primary text-white text-base font-bold leading-normal tracking-widest transition-all hover:bg-primary/90 hover:scale-105 active:scale-95">
+                        <span class="relative z-10">Entrar a la experiencia</span>
+                        <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </button>
+                </div>
+
+                <!-- 3D Loading / Subtle Footer -->
+                <div class="flex flex-col items-center gap-2">
+                </div>
+
+                <!-- Home Indicator (iOS) -->
+                <div class="w-32 h-1.5 bg-white/10 rounded-full mt-4"></div>
+            </div>
+
+            <!-- Background Image Element (Decorative) -->
+            <div class="absolute inset-0 -z-10 opacity-20 pointer-events-none">
+                <div class="w-full h-full bg-center bg-no-repeat bg-cover mix-blend-overlay"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCFjOAhgybYJvuQMZ2B2pkDcU0QF91qB_lPz1GM4i8Wb2R56heg4MNzr69jVoJD_t40AgO4W_9o5B5TKVegRtyJYNI_sNrbu0zWt3OeaAh7VWgTQjnWtdtmFgKJx_Nz5YxAsK8q5pFo7oHOp5SZekkXsukX6zayxuVLuXlsixpD3VCkjWLzhJuc9UhLHTpy3DePNo-0BV8N45PcrKWdgtaOfdM3MMpxGpsCkKHegYyXnpnAcmF2qDai6KT0XpgHXTr6e2hLcD-EvqNg"); filter: grayscale(100%) brightness(0.2);'>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 2: HOME / GALLERY -->
+    <!-- ============================================ -->
+    <section id="home-section" class="app-section fixed inset-0 overflow-hidden">
+        <!-- Top Navigation Bar -->
+        <div
+            class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-white/10">
+            <div class="flex items-center p-4 justify-between max-w-md mx-auto">
+                <div class="w-10"></div>
+                <h2
+                    class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center font-display">
+                    Museo Digital</h2>
+                <div class="flex w-10 items-center justify-end">
+                </div>
+            </div>
+        </div>
+
+        <main class="max-w-md mx-auto pb-2 max-h-[calc(100vh-140px)] overflow-y-auto">
+            <!-- Hero Section -->
+            <div class="@container">
+                <div class="px-4 py-2">
+                    <div class="bg-cover bg-center flex flex-col justify-end overflow-hidden rounded-xl min-h-[280px] shadow-2xl relative border border-white/5"
+                        style='background-image: linear-gradient(0deg, rgba(34, 16, 19, 0.9) 0%, rgba(34, 16, 19, 0) 60%), url("Imagen portada/imagen-portada.jpg"); background-size: cover; background-repeat: no-repeat; background-position: center;'>
+                        <div class="flex flex-col p-6 gap-2">
+                            <p class="text-white tracking-tight text-3xl font-bold leading-tight font-display">
+                                Bienvenidos al Museo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Gallery -->
+            <div class="grid grid-cols-2 gap-3 px-4 pt-3 pb-2">
+                <!-- Item 0: Panorama 360 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer" id="panorama-slug">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Vista panorámica 360 del museo" src="models/HDR/HDR.jpg" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">360</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Vista 360º del Museo
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Interactivo</p>
+                    </div>
+                </div>
+
+                <!-- Item 1 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Intricate sculpture of Jesus Christ with golden crown of thorns"
+                            src="models/jesus-en-la-cruz/jesus-en-la-cruz.webp" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cristo de papelón</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Fecha S. XVI</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Mantle and face of a Virgin Mary sculpture with ornate silver details"
+                            src="models/virgen-de-mena/virgen-de-mena.png" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Virgen de Mena</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Pedro de Mena</p>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="group relative flex flex-col gap-3 mt-2 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Detail of hands on a religious figure holding a cross"
+                            src="models/ecce-homo/ecce-homo.webp" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Ecce Homo</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Francisco Alonso de los
+                            Rios</p>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="group relative flex flex-col gap-3 mt-2 cursor-pointer" data-explore-button="true">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <div
+                            class="h-full w-full bg-primary/20 flex flex-col items-center justify-center p-6 text-center border-2 border-dashed border-primary/40 rounded-xl">
+                            <span class="material-symbols-outlined text-primary text-3xl mb-2">add_circle</span>
+                            <p class="text-xs font-bold text-primary uppercase tracking-tighter">Ver más tallas
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug"></h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic"></p>
+                    </div>
+                </div>
+
+                <!-- Hidden Gallery Items (18 more) -->
+                <!-- Item 5 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Cuadro Bayeu Inmculada Concepcion"
+                            src="models/bayeu-inmaculada/bayeu-inmaculada.webp?t=1" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro Bayeu
+                            Inmaculada</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Ramón Bayeu</p>
+                    </div>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Cuadro Bayeu San Benito" src="models/bayeu-san-benito/bayeu-san-benito.webp?t=1" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro Bayeu San
+                            Benito</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Ramón Bayeu</p>
+                    </div>
+                </div>
+
+                <!-- Item 7 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Cuadro Bayeu Santa Escolástica"
+                            src="models/bayeu-santa-gertrudis/bayeu-santa-gertrudis.webp?t=1" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro Bayeu Santa
+                            Escolástica</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Ramón Bayeu</p>
+                    </div>
+                </div>
+
+                <!-- Item 8 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Cuadro Goya El tránsito de San José"
+                            src="models/goya-transito-de-san-jose/goya-transito-de-san-jose.webp" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro Goya Tránsito
+                            de San José</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Francisco de Goya</p>
+                    </div>
+                </div>
+
+                <!-- Item 9 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Cuadro Goya San Bernardo"
+                            src="models/goya-san-carlos-borromeo/goya-san-carlos-borromeo.webp?t=1" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro Goya San
+                            Bernardo</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Francisco de Goya</p>
+                    </div>
+                </div>
+
+                <!-- Item 10 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Cuadro Goya Santa lutgarda"
+                            src="models/goya-santa-engracia/goya-santa-engracia.webp?t=1" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro Goya Santa
+                            Lutgarda</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Francisco de Goya</p>
+                    </div>
+                </div>
+
+                <!-- Item 11 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Cuadro La elevación de la cruz"
+                            src="models/la-elevacion-de-la-cruz/la-elevacion-de-la-cruz.webp?t=1" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cuadro la exaltación
+                            de la crúz</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Leandro Bassano</p>
+                    </div>
+                </div>
+
+                <!-- Item 12 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Bargueño relicario" src="models/bargueno-relicario/bargueno-relicario.png" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Bargueño relicario
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Anónimo</p>
+                    </div>
+                </div>
+
+                <!-- Item 13 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="San Pedro Apóstol" src="models/casulla-santa-ana/casulla-santa-ana.webp" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Casulla Santa Ana</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic"></p>
+                    </div>
+                </div>
+
+                <!-- Item 14 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Cristo atado a la columna"
+                            src="models/cristo-atado-a-la-columna/cristo-atado-a-la-columna.webp" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cristo atado a la
+                            columna</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Anónimo</p>
+                    </div>
+                </div>
+
+                <!-- Item 15 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Cristo Yacente" src="models/cristo-yacente/cristo-yacente.png" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Cristo Yacente</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Gregorio Fernández</p>
+                    </div>
+                </div>
+
+                <!-- Item 16 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Novisimos" src="models/novisimos/novisimos.webp" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Novisimos</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Giovanni Bernardino
+                            Azzolino</p>
+                    </div>
+                </div>
+
+                <!-- Item 17 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Virgen de la Soledad" src="models/reliquia-dorada/reliquia-dorada.webp" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Reliquia Dorada</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic"></p>
+                    </div>
+                </div>
+
+                <!-- Item 18 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="San Bernardo con la Virgen"
+                            src="models/san-bernardo-con-la-virgen/san-bernardo-con-la-virgen.webp" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">San Bernardo con la
+                            Virgen</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Luis Salvador Carmona
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Item 19 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="San Longinos" src="models/san-jose-con-el-nino/san-jose-con-el-nino.webp" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">San José con el Niño
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic"></p>
+                    </div>
+                </div>
+
+                <!-- Item 20 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Tapiz" src="models/tapiz/tapiz.webp" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Tapiz
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic"></p>
+                    </div>
+                </div>
+
+                <!-- Item 21 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Cristo del Perdón" src="models/virgen-asuncion/virgen-asuncion.webp" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Virgen Inmaculada</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Anónimo</p>
+                    </div>
+                </div>
+
+                <!-- Item 22 -->
+                <div class="group relative flex flex-col gap-3 cursor-pointer">
+                    <div
+                        class="aspect-[3/4] overflow-hidden rounded-xl bg-gray-200 dark:bg-white/5 relative border border-white/10">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Virgen del Rosario" src="models/virgen-romanica/virgen-romanica.png" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                        </div>
+                        <div class="absolute bottom-3 right-3">
+                            <div class="bg-primary/90 text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm block">view_in_ar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-1">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Virgen Románica</h3>
+                        <p class="text-xs text-slate-500 dark:text-gray-400 mt-1 italic">Autor: Anónimo</p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Developer Footer -->
+            <div class="w-full py-8 text-center">
+                <a href="https://www.apolostudio.es" target="_blank" rel="noopener noreferrer"
+                    class="text-[10px] text-slate-400 dark:text-gray-500 uppercase tracking-widest hover:text-primary transition-colors font-medium">
+                    Desarrollado por Apolo Studios
+                </a>
+            </div>
+        </main>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 2.5: MODEL DETAIL VIEWER -->
+    <!-- ============================================ -->
+    <section id="model-detail-section" class="app-section fixed inset-0 overflow-hidden">
+        <!-- Top Navigation Bar -->
+        <header
+            class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+            <div class="flex items-center p-4 justify-between max-w-md mx-auto w-full">
+                <button id="back-to-home-btn"
+                    class="text-slate-900 dark:text-white flex size-10 items-center justify-center rounded-full bg-black/5 dark:bg-white/5">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <h2 class="font-display text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center uppercase tracking-widest"
+                    id="model-title-header">Vista interactiva</h2>
+                <div class="flex w-10 items-center justify-end">
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-md mx-auto w-full pb-24 max-h-[calc(100vh-140px)] overflow-y-auto">
+            <!-- 3D Viewer Container -->
+            <div class="relative group">
+                <div class="@container px-4 py-3">
+                    <div
+                        class="relative w-full aspect-[4/5] bg-[#111111] rounded-xl overflow-hidden shadow-2xl border border-white/5">
+                        <!-- 3D Model Viewer -->
+                        <model-viewer id="3d-viewer" src="" ios-src="" alt="3D Model" shadow-intensity="1"
+                            camera-controls auto-rotate ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto"
+                            ar-placement="floor" xr-environment touch-action="pan-y" disable-tap
+                            style="width: 100%; height: 100%; background-color: transparent;">
+                        </model-viewer>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Section -->
+            <div class="px-4">
+                <div class="flex items-center gap-2 mt-4">
+                    <span class="h-[1px] w-8 bg-primary"></span>
+                    <span class="text-primary text-[10px] font-bold uppercase tracking-[0.3em]">Museo Virtual</span>
+                </div>
+                <h1 id="model-title"
+                    class="font-display text-slate-900 dark:text-white tracking-tight text-[32px] font-bold leading-tight pt-2">
+                    Crist de la Expiración
+                </h1>
+                <p id="model-subtitle"
+                    class="text-accent-gold dark:text-[#c9929b] text-sm font-medium leading-normal pb-6 pt-1">
+                    Baroque Style • 17th Century • Polychromed wood
+                </p>
+
+                <!-- Action Buttons (Neon) -->
+                <div class="grid grid-cols-2 gap-3 mt-4 mb-6">
+                    <!-- Audio Guide Button (Red Neon) -->
+                    <button id="audio-guide-btn"
+                        class="w-full bg-[#d41132] border border-[#d41132] text-white shadow-[0_0_15px_rgba(212,17,50,0.6)] hover:shadow-[0_0_25px_rgba(212,17,50,0.8)] hover:scale-[1.02] rounded-lg py-2 font-bold text-xs tracking-widest uppercase transition-all active:scale-95 flex flex-col items-center justify-center gap-2 h-full">
+                        <span class="material-symbols-outlined text-2xl">headphones</span>
+                        <span>Escuchar<br>Audioguía</span>
+                    </button>
+
+                    <!-- AR Button (Cyan Neon) -->
+                    <button id="ar-view-btn"
+                        class="w-full bg-cyan-400 border border-cyan-400 text-white shadow-[0_0_15px_rgba(34,211,238,0.6)] hover:shadow-[0_0_25px_rgba(34,211,238,0.8)] hover:scale-[1.02] rounded-lg py-2 font-bold text-xs tracking-widest uppercase transition-all active:scale-95 flex flex-col items-center justify-center gap-2 h-full">
+                        <span class="material-symbols-outlined text-2xl">view_in_ar</span>
+                        <span>Ver en realidad<br>Aumentada</span>
+                    </button>
+                </div>
+
+                <!-- Quick Specs Cards -->
+                <div class="grid grid-cols-2 gap-3 mb-8">
+                    <div class="bg-black/5 dark:bg-white/5 rounded-lg p-3 border border-primary/10">
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
+                            Tipología</p>
+                        <p id="model-typology" class="text-xs font-bold dark:text-white">-</p>
+                    </div>
+                    <div class="bg-black/5 dark:bg-white/5 rounded-lg p-3 border border-primary/10">
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Material
+                        </p>
+                        <p id="model-material" class="text-xs font-bold dark:text-white">-</p>
+                    </div>
+                    <div class="bg-black/5 dark:bg-white/5 rounded-lg p-3 border border-primary/10">
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Fecha
+                        </p>
+                        <p id="model-date" class="text-xs font-bold dark:text-white">-</p>
+                    </div>
+                    <div class="bg-black/5 dark:bg-white/5 rounded-lg p-3 border border-primary/10">
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Autor
+                        </p>
+                        <p id="model-author" class="text-xs font-bold dark:text-white">-</p>
+                    </div>
+                </div>
+
+                <!-- Detailed Description -->
+                <div class="space-y-4">
+                    <h3
+                        class="font-display text-lg font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary" style="font-size: 20px;">history_edu</span>
+                        Descripción de la pieza
+                    </h3>
+                    <p id="model-description" class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                        Selecciona un modelo para ver su descripción.
+                    </p>
+
+                </div>
+
+
+            </div>
+            <!-- Developer Footer -->
+            <div class="w-full py-8 text-center">
+                <a href="https://www.apolostudio.es" target="_blank" rel="noopener noreferrer"
+                    class="text-[10px] text-slate-400 dark:text-gray-500 uppercase tracking-widest hover:text-primary transition-colors font-medium">
+                    Desarrollado por Apolo Studios
+                </a>
+            </div>
+        </main>
+
+        <!-- Bottom Action Bar -->
+
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 2.7: PANORAMA 360 VIEWER -->
+    <!-- ============================================ -->
+    <section id="panorama-section" class="app-section fixed inset-0 overflow-hidden bg-black">
+        <!-- Close Button -->
+        <div class="absolute top-4 left-4 z-50">
+            <button id="close-panorama-btn"
+                class="flex items-center justify-center w-10 h-10 bg-black/50 backdrop-blur-md rounded-full text-white hover:bg-black/70 transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <!-- Viewer Container -->
+        <div id="panorama" class="w-full h-full"></div>
+
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 3: 3D VIEWER (Placeholder) -->
+    <!-- ============================================ -->
+    <section id="viewer-section" class="app-section min-h-screen flex items-center justify-center pb-24">
+        <div class="flex flex-col items-center justify-center text-center p-8 gap-6 max-w-sm mx-auto">
+            <span class="material-symbols-outlined text-6xl text-primary animate-pulse">view_in_ar</span>
+            <div class="space-y-4">
+                <h2 class="text-3xl font-display font-bold text-white tracking-widest uppercase">Visor 3D</h2>
+                <p class="text-gray-400 text-sm leading-relaxed max-w-[260px] mx-auto font-light tracking-wide">
+                    Selecciona una figura de la galería para interactuar con su modelo 3D detallado.
+                </p>
+            </div>
+            <button id="start-viewer-btn"
+                class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-bold text-xs tracking-[0.2em] uppercase transition-all shadow-lg hover:scale-105 active:scale-95 border border-white/10 backdrop-blur-md w-full max-w-[240px]">
+                Seleccionar Modelo
+            </button>
+        </div>
+        <!-- Developer Footer -->
+        <div class="absolute bottom-24 left-0 right-0 w-full text-center pointer-events-auto">
+            <a href="https://www.apolostudio.es" target="_blank" rel="noopener noreferrer"
+                class="text-[10px] text-slate-400 dark:text-gray-500 uppercase tracking-widest hover:text-primary transition-colors font-medium">
+                Desarrollado por Apolo Studios
+            </a>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 4: CALENDAR (Placeholder) -->
+    <!-- ============================================ -->
+    <section id="calendar-section" class="app-section min-h-screen flex items-center justify-center pb-24">
+        <div class="text-center p-8">
+            <span class="material-symbols-outlined text-6xl text-primary mb-4 block">calendar_month</span>
+            <h2 class="text-2xl font-bold mb-2">Agenda</h2>
+            <p class="text-gray-500">Próximamente...</p>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 5: INFO (Placeholder) -->
+    <!-- ============================================ -->
+    <section id="info-section"
+        class="app-section fixed inset-0 z-40 flex flex-col items-center justify-center bg-background-light dark:bg-background-dark">
+        <!-- Simplified Debug Card -->
+        <div
+            class="relative w-full max-w-xs bg-white dark:bg-[#1a1a1a] rounded-2xl p-6 border border-white/10 shadow-2xl mx-4">
+
+            <div class="flex flex-col items-center gap-6 text-center">
+                <span class="material-symbols-outlined text-5xl text-primary animate-pulse">view_in_ar</span>
+
+                <h2 class="font-bold text-lg uppercase tracking-widest text-slate-800 dark:text-white">Instrucciones AR
+                </h2>
+
+                <div class="space-y-4 w-full">
+                    <div class="p-4 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5">
+                        <p class="font-bold text-xs uppercase tracking-wide text-slate-600 dark:text-slate-300">1.
+                            Busque superficie plana</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5">
+                        <p class="font-bold text-xs uppercase tracking-wide text-slate-600 dark:text-slate-300">2.
+                            Apunte con su móvil</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5">
+                        <p class="font-bold text-xs uppercase tracking-wide text-slate-600 dark:text-slate-300">3.
+                            Descubra el modelo 3D</p>
+                    </div>
+                </div>
+
+                <button id="ar-instructions-done-btn"
+                    class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl uppercase tracking-widest transition-all shadow-lg active:scale-95 text-xs">
+                    ENTENDIDO
+                </button>
+            </div>
+
+        </div>
+        <!-- Developer Footer -->
+        <div class="absolute bottom-24 left-0 right-0 w-full text-center pointer-events-auto">
+            <a href="https://www.apolostudio.es" target="_blank" rel="noopener noreferrer"
+                class="text-[10px] text-slate-400 dark:text-gray-500 uppercase tracking-widest hover:text-primary transition-colors font-medium">
+                Desarrollado por Apolo Studios
+            </a>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- GLOBAL BOTTOM NAVIGATION BAR -->
+    <!-- ============================================ -->
+    <nav id="global-nav"
+        class="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-background-dark/95 backdrop-blur-xl border-t border-gray-200 dark:border-white/10 pb-6 pt-2 px-6 z-[100] hidden">
+        <div class="flex items-center justify-center gap-10 max-w-md mx-auto">
+            <div class="flex flex-col items-center gap-1 text-primary cursor-pointer nav-item" data-section="home">
+                <span class="material-symbols-outlined font-bold">home</span>
+                <span class="text-[10px] font-bold">Inicio</span>
+            </div>
+            <div class="flex flex-col items-center gap-1 text-slate-400 dark:text-gray-500 cursor-pointer nav-item"
+                data-section="viewer">
+                <span class="material-symbols-outlined">view_in_ar</span>
+                <span class="text-[10px]">Visor 3D</span>
+            </div>
+            <a href="/visualizador" class="flex flex-col items-center gap-1 text-slate-400 dark:text-gray-500 cursor-pointer">
+                <span class="material-symbols-outlined">workspace_premium</span>
+                <span class="text-[10px]">Máxima calidad</span>
+            </a>
+            <div class="flex flex-col items-center gap-1 text-slate-400 dark:text-gray-500 cursor-pointer nav-item"
+                data-section="info">
+                <span class="material-symbols-outlined">info</span>
+                <span class="text-[10px]">Info</span>
+            </div>
+        </div>
+    </nav>
+
+    <script src="js/app.js?v=27.0"></script>
+</body>
+
+</html>

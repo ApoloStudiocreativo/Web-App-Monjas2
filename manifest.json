@@ -1,0 +1,21 @@
+{
+    "name": "Museo Semana Santa",
+    "short_name": "Museo",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#221013",
+    "theme_color": "#d41132",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "Logotipo/isotipo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "Logotipo/isotipo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
